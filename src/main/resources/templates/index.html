@@ -18,7 +18,7 @@
                 </tr>
             </table>
         </div>
-        <div th:if="${previousGuessInvalid==true}">
+        <div th:if="${previousGuessInvalid}">
             <p>Previous guess invalid, please try again!</p>
         </div>
         <div>
@@ -26,7 +26,7 @@
                 <input type="hidden" name="savedPredictions" id="savedPredictions" data-th-value="${savedPredictionsString}">
                 <input type="hidden" name="answer" id="answer" data-th-value="${answer}">
                 <input type="text" name="guess" id="guess" placeholder="Guess the word!" required>
-                <button type="submit">Guess!</button>
+                <button type="submit" th:disabled="${isButtonDisabled}">Guess!</button>
             </form>
         </div>
         <div>

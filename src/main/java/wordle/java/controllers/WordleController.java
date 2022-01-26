@@ -32,6 +32,7 @@ public class WordleController {
         String savedPredictionsString = form.getFirst("savedPredictions");
         String savedAnswer = form.getFirst("answer");
         String guess = form.getFirst("guess").toLowerCase();
+        boolean isButtonDisabled = false;
 
         // checks if guess is valid, if invalid return to same page with error message
         boolean isGuessInvalid = true;
@@ -61,6 +62,7 @@ public class WordleController {
             }
             reloadedPlayer.updateAllSubpredictions();
 
+            model.addAttribute("isButtonDisabled", isButtonDisabled);
             model.addAttribute("playerObj", reloadedPlayer);
             model.addAttribute("answer", reloadedPlayer.getAnswer());
             model.addAttribute("savedPredictionsString", savedPredictionsString);
@@ -91,11 +93,15 @@ public class WordleController {
         // add new guess and result to predictions
         player.appendNewGuessAndFindResult(guess);
         player.updateAllSubpredictions();
-        
 
         // checks if prediction wins, checks if guess limit hit
         player.checkAllPredictionsForWin();
         player.checkAndUpdateLimitHit();
+
+        // disable button if player wins or hits the limit
+        if (player.isWin() || player.isLimitHit()) {
+            isButtonDisabled = true;
+        }
 
         // logging information
         // logger.log(Level.INFO, "answer is: " + player.getAnswer());
@@ -106,6 +112,7 @@ public class WordleController {
 
 
         // update model with all attributes
+        model.addAttribute("isButtonDisabled", isButtonDisabled);
         model.addAttribute("playerObj", player);
         model.addAttribute("answer", player.getAnswer());
         model.addAttribute("savedPredictionsString", savedPredictionsString);
