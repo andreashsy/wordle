@@ -2,6 +2,8 @@ package wordle.java.model;
 
 import static wordle.java.Constants.*;
 
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -9,6 +11,7 @@ import java.util.logging.Logger;
 public class Player {
     private static final Logger logger = Logger.getLogger(Player.class.getName());
     private String answer;
+    List<Prediction> predictions = new LinkedList<Prediction>();
     Prediction firstPrediction;
     Prediction secondPrediction;
     Prediction thirdPrediction;
@@ -36,5 +39,11 @@ public class Player {
                 prediction.appendResult("N");
             }
         }
+    }
+
+    public void appendNewGuess(String guess) {
+        Prediction newPrediction = new Prediction();
+        newPrediction.setWord(guess);
+        this.predictions.add(newPrediction);
     }
 }
