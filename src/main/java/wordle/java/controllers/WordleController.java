@@ -61,6 +61,7 @@ public class WordleController {
                 }
             }
             reloadedPlayer.updateAllSubpredictions();
+            reloadedPlayer.updateAllLetterLists();
 
             model.addAttribute("isButtonDisabled", isButtonDisabled);
             model.addAttribute("playerObj", reloadedPlayer);
@@ -93,6 +94,7 @@ public class WordleController {
         // add new guess and result to predictions
         player.appendNewGuessAndFindResult(guess);
         player.updateAllSubpredictions();
+        player.updateAllLetterLists();
 
         // checks if prediction wins, checks if guess limit hit
         player.checkAllPredictionsForWin();
@@ -104,11 +106,13 @@ public class WordleController {
         }
 
         // logging information
-        // logger.log(Level.INFO, "answer is: " + player.getAnswer());
+        logger.log(Level.INFO, "answer is: " + player.getAnswer());
         for (Prediction prediction:player.getPredictions()) {
             logger.log(Level.INFO, "Result for guess %s is %s".formatted(prediction.getWordString(), prediction.getResultString()));
         }
-        // logger.log(Level.INFO, "limit hit? " + player.isLimitHit());
+        logger.log(Level.INFO, "green letter list? " + player.getCorrectPositionLetters());
+        logger.log(Level.INFO, "yellow letter list? " + player.getInAnswerLetters());
+        logger.log(Level.INFO, "grey letter list? " + player.getIncorrectLetters());
 
 
         // update model with all attributes

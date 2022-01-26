@@ -34,5 +34,19 @@
                 <button type="submit">New Game</button>
             </form>
         </div>
+        <div th:if="${playerObj!=null}">
+            <h3>Green Letters:</h3>
+            <ul>
+                <li th:each="letter:${playerObj.correctPositionLetters}" data-th-text="${letter}"></li>
+            </ul>
+            <h3>Yellow Letters:</h3>
+            <ul>
+                <li th:each="letter:${playerObj.inAnswerLetters}" data-th-text="${letter}"></li>
+            </ul>
+            <h3>Grey Letters:</h3>
+            <ul>
+                <li th:each="letter:${playerObj.incorrectLetters}" data-th-text="${letter}"></li>
+            </ul>
+        </div>
     </body>
 </html>

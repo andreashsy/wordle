@@ -2,6 +2,7 @@ package wordle.java.model;
 
 import static wordle.java.Constants.*;
 
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
@@ -15,9 +16,77 @@ public class Player {
     private boolean win = false;
     private int maxGuesses = 6;
     private boolean limitHit = false;
+    private List<String> correctPositionLetters = new LinkedList<String>();
+    private List<String> inAnswerLetters = new LinkedList<String>();
+    private List<String> incorrectLetters = new LinkedList<String>(Arrays.asList(ALL_LETTER_ARRAY));
 
     public Player() {
         this.answer = this.initializeAnswer();
+    }
+
+    public void updateAllLetterLists() {
+        updateAllCorrectPositionLetters();
+        updateAllInAnswerLetters();
+    }
+
+    private void updateAllCorrectPositionLetters() {
+        for (Prediction prediction:predictions) {
+            for (int i = 0; i < prediction.getWordString().length(); i++) {
+                String resultLetter = String.valueOf(prediction.getResultString().charAt(i));
+                String wordLetter = String.valueOf(prediction.getWordString().charAt(i));
+                if (resultLetter.equals("M") ) {
+                    if (incorrectLetters.contains(wordLetter)) {
+                        incorrectLetters.remove(wordLetter);
+                    }
+                    
+                    if (!correctPositionLetters.contains(wordLetter)) {
+                        correctPositionLetters.add(wordLetter);
+                    }                    
+                }
+            }
+        }
+    }
+
+    private void updateAllInAnswerLetters() {
+        for (Prediction prediction:predictions) {
+            for (int i = 0; i < prediction.getWordString().length(); i++) {
+                String resultLetter = String.valueOf(prediction.getResultString().charAt(i));
+                String wordLetter = String.valueOf(prediction.getWordString().charAt(i));
+                if (resultLetter.equals("I") ) {
+                    if (incorrectLetters.contains(wordLetter)) {
+                        incorrectLetters.remove(wordLetter);
+                    }
+                    
+                    if (!inAnswerLetters.contains(wordLetter)) {
+                        inAnswerLetters.add(wordLetter);
+                    }                    
+                }
+            }
+        }
+    }
+
+    public boolean isLetterInIncorrectLetters(String letter) {
+        if (incorrectLetters.contains(letter)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public boolean isLetterInCorrectPositionLetters(String letter) {
+        if (correctPositionLetters.contains(letter)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public boolean isLetterInInAnswerLetters(String letter) {
+        if (inAnswerLetters.contains(letter)) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public void checkAllPredictionsForWin() {
@@ -94,5 +163,17 @@ public class Player {
 
     public void setLimitHit(boolean limitHit) {
         this.limitHit = limitHit;
+    }
+
+    public List<String> getCorrectPositionLetters() {
+        return this.correctPositionLetters;
+    }
+
+    public List<String> getInAnswerLetters() {
+        return this.inAnswerLetters;
+    }
+
+    public List<String> getIncorrectLetters() {
+        return this.incorrectLetters;
     }
 }
