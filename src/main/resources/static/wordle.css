@@ -1,0 +1,19 @@
+h1 {
+    size: 4em;
+}
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+  }
+
+.M {
+    background-color: green;
+}
+
+.I {
+    background-color: yellow;
+}
+
+.N {
+    background-color: dimgrey;
+}

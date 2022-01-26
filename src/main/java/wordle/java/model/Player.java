@@ -11,29 +11,37 @@ import java.util.logging.Logger;
 public class Player {
     private static final Logger logger = Logger.getLogger(Player.class.getName());
     private String answer;
-    List<Prediction> predictions = new LinkedList<Prediction>();
-    Prediction firstPrediction;
-    Prediction secondPrediction;
-    Prediction thirdPrediction;
-    Prediction fourthPrediction;
-    Prediction fifthPrediction;
-    Prediction sixthPrediction;
+    private List<Prediction> predictions = new LinkedList<Prediction>();
+    private boolean win = false;
+    private int maxGuesses = 6;
+    private boolean limitHit = false;
 
     public Player() {
         this.answer = this.initializeAnswer();
     }
 
+    public void checkAllPredictionsForWin() {
+        for (Prediction prediction:predictions) {
+            checkWin(prediction);
+        }
+    }
+
+    public void checkWin(Prediction prediction) {
+        if (prediction.getResultString().equals("MMMMM")) {
+            this.win = true;
+        }
+    }
+
     private String initializeAnswer() {
-        String[] allWords = FIVE_LETTER_WORDS_CONCAT.split("\\|");
-        int rnd = new Random().nextInt(allWords.length);
-        return allWords[rnd];
+        int rnd = new Random().nextInt(ALL_WORD_ARRAY.length);
+        return ALL_WORD_ARRAY[rnd];
     }
     
     public void checkPrediction(Prediction prediction) {
-        for (int i = 0; i < prediction.getWord().length(); i++) {            
-            if (prediction.getWord().charAt(i) == this.answer.charAt(i)) {
+        for (int i = 0; i < prediction.getWordString().length(); i++) {            
+            if (prediction.getWordString().charAt(i) == this.answer.charAt(i)) {
                 prediction.appendResult("M");
-            } else if (this.answer.contains(Character.toString(prediction.getWord().charAt(i)))) {
+            } else if (this.answer.contains(Character.toString(prediction.getWordString().charAt(i)))) {
                 prediction.appendResult("I");
             } else {
                 prediction.appendResult("N");
@@ -43,9 +51,21 @@ public class Player {
 
     public void appendNewGuessAndFindResult(String guess) {
         Prediction newPrediction = new Prediction();
-        newPrediction.setWord(guess);
+        newPrediction.setWordString(guess);
         this.checkPrediction(newPrediction);
         this.predictions.add(newPrediction);
+    }
+
+    public void checkAndUpdateLimitHit() {
+        if (this.predictions.size() >= maxGuesses) {
+            this.limitHit = true;
+        }
+    }
+
+    public void updateAllSubpredictions() {
+        for (Prediction prediction:predictions) {
+            prediction.guessAndResultStringToSubpredictions();
+        }
     }
 
     public List<Prediction> getPredictions() {
@@ -58,5 +78,21 @@ public class Player {
 
     public String getAnswer() {
         return this.answer;
+    }
+
+    public boolean isWin() {
+        return this.win;
+    }
+
+    public void setWin(boolean win) {
+        this.win = win;
+    }
+
+    public boolean isLimitHit() {
+        return this.limitHit;
+    }
+
+    public void setLimitHit(boolean limitHit) {
+        this.limitHit = limitHit;
     }
 }

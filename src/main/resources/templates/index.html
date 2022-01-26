@@ -4,17 +4,22 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/wordle.css">
     <title>Wordle</title>
 </head>
     <body>
         <h1>Wordle</h1>
         <div name="predictionResults" th:if="${playerObj!=null}">
-
-            <div th:each="prediction:${playerObj.predictions}">
-                <p th:text= "${prediction.word}"></p>
-                <p th:text= "${prediction.result}"></p>
-            </div>
-
+            <h1 th:if="${playerObj.win}">Congratulations, you win!</h1>
+            <h1 th:if="${playerObj.limitHit}">Try again! The answer is <span data-th-text="${answer}"></span></h1>
+            <table>
+                <tr th:each="prediction:${playerObj.predictions}">
+                    <td th:each="subprediction:${prediction.subpredictions}" th:text="${subprediction.guess.toUpperCase()}" data-th-class="${subprediction.result}"></td>
+                </tr>
+            </table>
+        </div>
+        <div th:if="${previousGuessInvalid==true}">
+            <p>Previous guess invalid, please try again!</p>
         </div>
         <div>
             <form action="/guess" method="post">
@@ -22,6 +27,11 @@
                 <input type="hidden" name="answer" id="answer" data-th-value="${answer}">
                 <input type="text" name="guess" id="guess" placeholder="Guess the word!" required>
                 <button type="submit">Guess!</button>
+            </form>
+        </div>
+        <div>
+            <form action="/new" method="get">
+                <button type="submit">New Game</button>
             </form>
         </div>
     </body>
