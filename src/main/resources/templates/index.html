@@ -9,30 +9,17 @@
     <body>
         <h1>Wordle</h1>
         <div name="predictionResults" th:if="${playerObj!=null}">
-            <div th:if="${playerObj.firstPrediction!=null}">
-                <p th:text="${playerObj.firstPrediction.word}"></p>
-                <p th:text="${playerObj.firstPrediction.result}"></p>
-            </div>
-            <div th:if="${playerObj.secondPrediction!=null}">
 
+            <div th:each="prediction:${playerObj.predictions}">
+                <p th:text= "${prediction.word}"></p>
+                <p th:text= "${prediction.result}"></p>
             </div>
-            <div th:if="${playerObj.thirdPrediction!=null}">
 
-            </div>
-            <div th:if="${playerObj.fourthPrediction!=null}">
-
-            </div>
-            <div th:if="${playerObj.fifthPrediction!=null}">
-
-            </div>
-            <div th:if="${playerObj.sixthPrediction!=null}">
-
-            </div>
         </div>
         <div>
             <form action="/guess" method="post">
                 <input type="hidden" name="savedPredictions" id="savedPredictions" data-th-value="${savedPredictionsString}">
-                <input type="hidden" name="savedResults" id="savedResults" data-th-value="${savedResultsString}">
+                <input type="hidden" name="answer" id="answer" data-th-value="${answer}">
                 <input type="text" name="guess" id="guess" placeholder="Guess the word!" required>
                 <button type="submit">Guess!</button>
             </form>

@@ -41,9 +41,22 @@ public class Player {
         }
     }
 
-    public void appendNewGuess(String guess) {
+    public void appendNewGuessAndFindResult(String guess) {
         Prediction newPrediction = new Prediction();
         newPrediction.setWord(guess);
+        this.checkPrediction(newPrediction);
         this.predictions.add(newPrediction);
+    }
+
+    public List<Prediction> getPredictions() {
+        return this.predictions;
+    }
+
+    public void setAnswer(String answer) {
+        this.answer = answer;
+    }
+
+    public String getAnswer() {
+        return this.answer;
     }
 }
