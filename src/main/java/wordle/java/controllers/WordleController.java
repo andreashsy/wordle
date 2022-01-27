@@ -110,9 +110,10 @@ public class WordleController {
         for (Prediction prediction:player.getPredictions()) {
             logger.log(Level.INFO, "Result for guess %s is %s".formatted(prediction.getWordString(), prediction.getResultString()));
         }
-        logger.log(Level.INFO, "green letter list? " + player.getCorrectPositionLetters());
-        logger.log(Level.INFO, "yellow letter list? " + player.getInAnswerLetters());
-        logger.log(Level.INFO, "grey letter list? " + player.getIncorrectLetters());
+        logger.log(Level.INFO, "green letter list? " + player.getGreenLetters());
+        logger.log(Level.INFO, "yellow letter list? " + player.getYellowLetters());
+        logger.log(Level.INFO, "grey letter list? " + player.getGreyLetters());
+        logger.log(Level.INFO, "white letter list? " + player.getWhiteLetters());
 
 
         // update model with all attributes

@@ -16,49 +16,72 @@ public class Player {
     private boolean win = false;
     private int maxGuesses = 6;
     private boolean limitHit = false;
-    private List<String> correctPositionLetters = new LinkedList<String>();
-    private List<String> inAnswerLetters = new LinkedList<String>();
-    private List<String> incorrectLetters = new LinkedList<String>(Arrays.asList(ALL_LETTER_ARRAY));
+    private List<String> greenLetters = new LinkedList<String>();
+    private List<String> yellowLetters = new LinkedList<String>();
+    private List<String> greyLetters = new LinkedList<String>();
+    private List<String> whiteLetters = new LinkedList<String>(Arrays.asList(ALL_LETTER_ARRAY));
 
     public Player() {
         this.answer = this.initializeAnswer();
     }
 
     public void updateAllLetterLists() {
-        updateAllCorrectPositionLetters();
-        updateAllInAnswerLetters();
+        updateYellowLetters();
+        updateGreenLetters();
+        updateGreyLetters();
     }
 
-    private void updateAllCorrectPositionLetters() {
+    private void updateGreyLetters() {
         for (Prediction prediction:predictions) {
             for (int i = 0; i < prediction.getWordString().length(); i++) {
                 String resultLetter = String.valueOf(prediction.getResultString().charAt(i));
                 String wordLetter = String.valueOf(prediction.getWordString().charAt(i));
-                if (resultLetter.equals("M") ) {
-                    if (incorrectLetters.contains(wordLetter)) {
-                        incorrectLetters.remove(wordLetter);
+                if (resultLetter.equals("N") ) {
+                    if (whiteLetters.contains(wordLetter)) {
+                        whiteLetters.remove(wordLetter);
                     }
                     
-                    if (!correctPositionLetters.contains(wordLetter)) {
-                        correctPositionLetters.add(wordLetter);
+                    if (!greyLetters.contains(wordLetter)) {
+                        greyLetters.add(wordLetter);
                     }                    
                 }
             }
         }
     }
 
-    private void updateAllInAnswerLetters() {
+    private void updateGreenLetters() {
+        for (Prediction prediction:predictions) {
+            for (int i = 0; i < prediction.getWordString().length(); i++) {
+                String resultLetter = String.valueOf(prediction.getResultString().charAt(i));
+                String wordLetter = String.valueOf(prediction.getWordString().charAt(i));
+                if (resultLetter.equals("M") ) {
+                    if (whiteLetters.contains(wordLetter)) {
+                        whiteLetters.remove(wordLetter);
+                    }
+                    if (yellowLetters.contains(wordLetter)) {
+                        yellowLetters.remove(wordLetter);
+                    }
+                    
+                    if (!greenLetters.contains(wordLetter)) {
+                        greenLetters.add(wordLetter);
+                    }                    
+                }
+            }
+        }
+    }
+
+    private void updateYellowLetters() {
         for (Prediction prediction:predictions) {
             for (int i = 0; i < prediction.getWordString().length(); i++) {
                 String resultLetter = String.valueOf(prediction.getResultString().charAt(i));
                 String wordLetter = String.valueOf(prediction.getWordString().charAt(i));
                 if (resultLetter.equals("I") ) {
-                    if (incorrectLetters.contains(wordLetter)) {
-                        incorrectLetters.remove(wordLetter);
+                    if (whiteLetters.contains(wordLetter)) {
+                        whiteLetters.remove(wordLetter);
                     }
                     
-                    if (!inAnswerLetters.contains(wordLetter)) {
-                        inAnswerLetters.add(wordLetter);
+                    if (!yellowLetters.contains(wordLetter)) {
+                        yellowLetters.add(wordLetter);
                     }                    
                 }
             }
@@ -66,7 +89,7 @@ public class Player {
     }
 
     public boolean isLetterInIncorrectLetters(String letter) {
-        if (incorrectLetters.contains(letter)) {
+        if (greyLetters.contains(letter)) {
             return true;
         } else {
             return false;
@@ -74,7 +97,7 @@ public class Player {
     }
 
     public boolean isLetterInCorrectPositionLetters(String letter) {
-        if (correctPositionLetters.contains(letter)) {
+        if (greenLetters.contains(letter)) {
             return true;
         } else {
             return false;
@@ -82,7 +105,7 @@ public class Player {
     }
 
     public boolean isLetterInInAnswerLetters(String letter) {
-        if (inAnswerLetters.contains(letter)) {
+        if (yellowLetters.contains(letter)) {
             return true;
         } else {
             return false;
@@ -165,15 +188,19 @@ public class Player {
         this.limitHit = limitHit;
     }
 
-    public List<String> getCorrectPositionLetters() {
-        return this.correctPositionLetters;
+    public List<String> getGreenLetters() {
+        return this.greenLetters;
     }
 
-    public List<String> getInAnswerLetters() {
-        return this.inAnswerLetters;
+    public List<String> getYellowLetters() {
+        return this.yellowLetters;
     }
 
-    public List<String> getIncorrectLetters() {
-        return this.incorrectLetters;
+    public List<String> getGreyLetters() {
+        return this.greyLetters;
+    }
+
+    public List<String> getWhiteLetters() {
+        return this.whiteLetters;
     }
 }

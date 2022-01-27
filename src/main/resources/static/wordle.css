@@ -7,7 +7,7 @@ table, th, td {
   }
 
 .M {
-    background-color: green;
+    background-color: lightgreen;
 }
 
 .I {
@@ -15,5 +15,5 @@ table, th, td {
 }
 
 .N {
-    background-color: dimgrey;
+    background-color: lightslategrey;
 }
