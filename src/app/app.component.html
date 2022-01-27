@@ -1,1 +1,19 @@
 <h1>wordle</h1>
+
+<table>
+  <tr *ngFor="let prediction of player.predictions">
+    <td *ngFor="let subprediction of prediction.subpredictions"
+        class="{{subprediction.resultLetter}}">
+                {{subprediction.guessLetter}}
+    </td>    
+  </tr>
+</table>
+
+<form #formDirective="ngForm" [formGroup]="form" (ngSubmit)="processGuess()">
+  <input type="text" formControlName="guess">
+  <button type="submit">Submit</button>
+  <button (click)="newGame()">New Game</button>
+</form>
+
+<h3>Previous guess>>> {{prevGuess}}</h3>
+<h3>Player's first guess' subprediction>>> {{testString}}</h3>

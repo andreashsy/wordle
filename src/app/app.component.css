@@ -1,0 +1,16 @@
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+  }
+
+.M {
+    background-color: lightgreen;
+}
+
+.I {
+    background-color: yellow;
+}
+
+.N {
+    background-color: lightgrey;
+}
