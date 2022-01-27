@@ -6,7 +6,6 @@ export class Prediction{
         public result:string,
         public subpredictions?: Subprediction[]
     ) {
-
     }
 
     generateSubpredictions() {

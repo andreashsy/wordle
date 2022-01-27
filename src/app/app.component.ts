@@ -1,66 +1,52 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { Player } from './player';
 import { Prediction } from './prediction';
-import { Subprediction } from './subprediction';
+import { wordNotInListValidator } from './word-not-in-list.directive';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
+
+
 export class AppComponent {
   title = 'wordle-angular';
   form: FormGroup
-  player: Player
-
+  player: Player = new Player([])
+  
+  //TODO: remove test variables
   prevGuess: String = "initial value"
   testString: String = "initial value"
-  playerDemo: Player = new Player([
-    new Prediction("", "", [
-      new Subprediction("g", "M"),
-      new Subprediction("u", "I"),
-      new Subprediction("e", "N"),
-      new Subprediction("s", "I"),
-      new Subprediction("1", "M"),
-    ]),
-    new Prediction("", "", [
-      new Subprediction("g", "M"),
-      new Subprediction("u", "I"),
-      new Subprediction("e", "I"),
-      new Subprediction("s", "M"),
-      new Subprediction("2", "M"),
-    ]),
-    new Prediction("", "", [
-      new Subprediction("g", "M"),
-      new Subprediction("u", "M"),
-      new Subprediction("e", "M"),
-      new Subprediction("s", "M"),
-      new Subprediction("3", "M"),
-    ])
-  ])
 
-  guessFormControl = new FormControl('', [Validators.required])
+  guessFormControl = new FormControl('', [Validators.required, wordNotInListValidator(this.player.FIVE_LETTER_WORDS_LIST)])
 
   constructor(private fb: FormBuilder) {
     this.form = this.fb.group({
       guess: this.guessFormControl
     })
-    this.player = new Player([])
   }
 
   processGuess() {
+    console.log("Submit button pressed!")
     const guess = this.form.value.guess
     const guessResult = this.player.checkGuess(guess)
+    //const guessResult = "NNNNN"
     var newPrediction = new Prediction(guess, guessResult)
     this.prevGuess = newPrediction.guess + newPrediction.result
     newPrediction.generateSubpredictions()
     this.player.predictions.push(newPrediction)
-    this.testString = this.player.predictions[0].subpredictions![0].guessLetter
+    this.player.checkIfWonOrLost()
     this.guessFormControl.reset()
   }
 
   newGame() {
+    console.log("New Game button pressed!")
     this.player = new Player([])
+    this.guessFormControl.reset()
   }
+
 }
+
+

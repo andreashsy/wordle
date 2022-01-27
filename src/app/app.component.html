@@ -1,4 +1,4 @@
-<h1>wordle</h1>
+<h1>Wordle</h1>
 
 <table>
   <tr *ngFor="let prediction of player.predictions">
@@ -9,11 +9,18 @@
   </tr>
 </table>
 
+<h1 *ngIf="player.hasWon">Congratulations, you win!</h1>
+<h1 *ngIf="player.hasLost">Please try again, answer is: {{player.answer}}</h1>
+
 <form #formDirective="ngForm" [formGroup]="form" (ngSubmit)="processGuess()">
-  <input type="text" formControlName="guess">
-  <button type="submit">Submit</button>
-  <button (click)="newGame()">New Game</button>
+  <input type="text" formControlName="guess" placeholder="Your guess">
+  <div *ngIf="guessFormControl.hasError('wordNotInList')">
+    Guess must be a valid 5 letter word
+  </div>
+  <button type="submit" [disabled]="player.hasWon || player.hasLost || form.invalid">Submit</button>
+</form>
+<form (ngSubmit)="newGame()">
+  <button type="submit">New Game</button>
 </form>
 
 <h3>Previous guess>>> {{prevGuess}}</h3>
-<h3>Player's first guess' subprediction>>> {{testString}}</h3>
