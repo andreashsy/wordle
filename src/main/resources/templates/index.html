@@ -9,6 +9,17 @@
 </head>
     <body>
         <h1>Wordle</h1>
+        <div name="rules" th:if="${playerObj==null}">
+            <h3>Rules</h3>
+            <ul>
+                <li>Guess a five letter English word</li>
+                <li>You have six attempts</li>
+                <li>Guesses must be a valid word (based on an internal list; not all words included)</li>
+                <li>If a letter is in the word and in the correct position, it appears as green</li>
+                <li>If a letter is in the word but not in the correct position, it appears as yellow</li>
+                <li>If a letter is not in the word, it appears as grey</li>
+            </ul>
+        </div>
         <div name="predictionResults" th:if="${playerObj!=null}">
             <h1 th:if="${playerObj.win}">Congratulations, you win!</h1>
             <h1 th:if="${playerObj.limitHit and not playerObj.win}">Try again! The answer is <span data-th-text="${answer}"></span></h1>
