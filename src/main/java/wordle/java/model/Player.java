@@ -22,7 +22,7 @@ public class Player {
     private List<String> whiteLetters = new LinkedList<String>(Arrays.asList(ALL_LETTER_ARRAY));
 
     public Player() {
-        this.answer = this.initializeAnswer();
+        this.answer = this.generateRandomAnswer();
     }
 
     public void updateAllLetterLists() {
@@ -34,13 +34,12 @@ public class Player {
     private void updateGreyLetters() {
         for (Prediction prediction:predictions) {
             for (int i = 0; i < prediction.getWordString().length(); i++) {
-                String resultLetter = String.valueOf(prediction.getResultString().charAt(i));
+                char resultLetter = prediction.getResultString().charAt(i);
                 String wordLetter = String.valueOf(prediction.getWordString().charAt(i));
-                if (resultLetter.equals("N") ) {
+                if (resultLetter == 'N' ) {
                     if (whiteLetters.contains(wordLetter)) {
                         whiteLetters.remove(wordLetter);
                     }
-                    
                     if (!greyLetters.contains(wordLetter)) {
                         greyLetters.add(wordLetter);
                     }                    
@@ -52,9 +51,9 @@ public class Player {
     private void updateGreenLetters() {
         for (Prediction prediction:predictions) {
             for (int i = 0; i < prediction.getWordString().length(); i++) {
-                String resultLetter = String.valueOf(prediction.getResultString().charAt(i));
+                char resultLetter = prediction.getResultString().charAt(i);
                 String wordLetter = String.valueOf(prediction.getWordString().charAt(i));
-                if (resultLetter.equals("M") ) {
+                if (resultLetter == 'M' ) {
                     if (whiteLetters.contains(wordLetter)) {
                         whiteLetters.remove(wordLetter);
                     }
@@ -73,13 +72,12 @@ public class Player {
     private void updateYellowLetters() {
         for (Prediction prediction:predictions) {
             for (int i = 0; i < prediction.getWordString().length(); i++) {
-                String resultLetter = String.valueOf(prediction.getResultString().charAt(i));
+                char resultLetter = prediction.getResultString().charAt(i);
                 String wordLetter = String.valueOf(prediction.getWordString().charAt(i));
-                if (resultLetter.equals("I") ) {
+                if (resultLetter == 'I' ) {
                     if (whiteLetters.contains(wordLetter)) {
                         whiteLetters.remove(wordLetter);
                     }
-                    
                     if (!yellowLetters.contains(wordLetter)) {
                         yellowLetters.add(wordLetter);
                     }                    
@@ -124,7 +122,7 @@ public class Player {
         }
     }
 
-    private String initializeAnswer() {
+    private String generateRandomAnswer() {
         int rnd = new Random().nextInt(ALL_WORD_ARRAY.length);
         return ALL_WORD_ARRAY[rnd];
     }
@@ -156,7 +154,7 @@ public class Player {
 
     public void updateAllSubpredictions() {
         for (Prediction prediction:predictions) {
-            prediction.guessAndResultStringToSubpredictions();
+            prediction.updateSubpredictions();
         }
     }
 

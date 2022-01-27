@@ -34,30 +34,24 @@ public class WordleController {
         String guess = form.getFirst("guess").toLowerCase();
         boolean isButtonDisabled = false;
 
-        // checks if guess is valid, if invalid return to same page with error message
+        // checks if guess is valid, if invalid load same page with error message
         boolean isGuessInvalid = true;
         for (String word:ALL_WORD_ARRAY) {
             if (word.equals(guess)) {
-                logger.log(Level.INFO, "guess is valid!");
-                logger.log(Level.INFO, "word is: " + word);
-                logger.log(Level.INFO, "guess is: " + guess);
                 isGuessInvalid = false;
                 break;
             }
         }
         if (isGuessInvalid) {
-            logger.log(Level.INFO, "guess is ***NOT*** valid!");
             Player reloadedPlayer = new Player();
             if (savedAnswer != "") {
-                // bring forward old answer
+                // sets old answer into player
                 reloadedPlayer.setAnswer(savedAnswer);
-                logger.log(Level.INFO, "old answer set");
             }
             if (savedPredictionsString != "") {
-                // load previous guesses
+                // load previous guesses into player
                 for (String s:savedPredictionsString.split(RE_DELIMITER)) {
                     reloadedPlayer.appendNewGuessAndFindResult(s);
-                    logger.log(Level.INFO, "previous prediction set");
                 }
             }
             reloadedPlayer.updateAllSubpredictions();

@@ -12,42 +12,34 @@ public class Prediction {
     private String wordString = "";
     private String resultString = "";
 
-    public String predictionGuessesToString() {   
-        this.wordString = subpredicitons.stream()
-                    .map(Subprediction::getGuess)
-                    .collect(Collectors.joining());  
-        return this.wordString;
-    }
-
-    public String predictionResultsToString() {        
-        this.resultString = subpredicitons.stream()
-                            .map(Subprediction::getResult)
-                            .collect(Collectors.joining());
-        return this.resultString;
-    }
-
-    public void guessAndResultStringToSubpredictions() {
+    public void updateSubpredictions() {
         this.subpredicitons = new LinkedList<Subprediction>();
         for (int i = 0; i < wordString.length(); i++) {
             Subprediction subprediction = new Subprediction();
-            subprediction.setGuess(String.valueOf(this.wordString.charAt(i)));
-            subprediction.setResult(String.valueOf(this.resultString.charAt(i)));
+            subprediction.setGuess(this.wordStringAt(i));
+            subprediction.setResult(this.resultStringAt(i));
             this.appendSubprediction(subprediction);
         }
     }
 
-    public void stringToSubpredictions(String guess) {
-        for (String c:guess.split("")) {
-            Subprediction subprediction = new Subprediction();
-            subprediction.setGuess(c);
-            this.appendSubprediction(subprediction);
-        }
+    public String wordStringAt(int i) {
+        char targetChar = this.wordString.charAt(i);
+        return String.valueOf(targetChar);
+    }
+
+    public String resultStringAt(int i) {
+        char targetChar = this.resultString.charAt(i);
+        return String.valueOf(targetChar);
     }
 
     public void appendSubprediction(Subprediction subprediction) {
         this.subpredicitons.add(subprediction);
     }
 
+    public void appendResult(String character) {
+        this.resultString += character;
+    }
+    
     public List<Subprediction> getSubpredictions() {
         return this.subpredicitons;
     }
@@ -68,7 +60,4 @@ public class Prediction {
         this.resultString = result;
     }
 
-    public void appendResult(String character) {
-        this.resultString += character;
-    }
 }
