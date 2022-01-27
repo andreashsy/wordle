@@ -11,7 +11,7 @@
         <h1>Wordle</h1>
         <div name="predictionResults" th:if="${playerObj!=null}">
             <h1 th:if="${playerObj.win}">Congratulations, you win!</h1>
-            <h1 th:if="${playerObj.limitHit}">Try again! The answer is <span data-th-text="${answer}"></span></h1>
+            <h1 th:if="${playerObj.limitHit and not playerObj.win}">Try again! The answer is <span data-th-text="${answer}"></span></h1>
             <table>
                 <tr th:each="prediction:${playerObj.predictions}">
                     <td th:each="subprediction:${prediction.subpredictions}" th:text="${subprediction.guess.toUpperCase()}" data-th-class="${subprediction.result}"></td>
