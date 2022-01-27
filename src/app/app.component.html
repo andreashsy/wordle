@@ -22,5 +22,52 @@
 <form (ngSubmit)="newGame()">
   <button type="submit">New Game</button>
 </form>
+<input type="checkbox" name="checkbox-rules" (change)="onCheckBoxChange($event)">
+<label for="checkbox-rules">Show rules</label>
+<div name="rules" *ngIf="showRules">
+  <h3>Rules</h3>
+  <ul>
+      <li>Guess a five letter English word</li>
+      <li>You have six attempts</li>
+      <li>Guesses must be a valid word (based on an internal list; not all words included)</li>
+      <li>If a letter is in the word and in the correct position, it appears as green</li>
+      <li>If a letter is in the word but not in the correct position, it appears as yellow</li>
+      <li>If a letter is not in the word, it appears as grey</li>
+  </ul>
+</div>
 
-<h3>Previous guess>>> {{prevGuess}}</h3>
+<h3>Green Letters:</h3>
+<table>
+  <tr>
+    <td *ngFor="let letter of player.greenList" class="M">
+      {{letter}}
+    </td>
+  </tr>
+</table>
+
+<h3>Yellow Letters:</h3>
+<table>
+  <tr>
+    <td *ngFor="let letter of player.yellowList" class="I">
+      {{letter}}
+    </td>
+  </tr>
+</table>
+
+<h3>Grey Letters:</h3>
+<table>
+  <tr>
+    <td *ngFor="let letter of player.greyList" class="N">
+      {{letter}}
+    </td>
+  </tr>
+</table>
+
+<h3>White Letters:</h3>
+<table>
+  <tr>
+    <td *ngFor="let letter of player.whiteList">
+      {{letter}}
+    </td>
+  </tr>
+</table>
