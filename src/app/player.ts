@@ -16,8 +16,7 @@ export class Player {
         public maxGuesses:number = 6,
         public hasWon:Boolean = false,
         public hasLost:Boolean = false,
-        public remainingGuesses: number = maxGuesses
-
+        public remainingGuesses: number = maxGuesses,
     ) {
         this.generateRandomAnswer()
         console.log("answer is: " + this.answer)

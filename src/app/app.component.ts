@@ -32,7 +32,7 @@ export class AppComponent {
 
   processGuess() {
     console.log('Submit button pressed!');
-    const guess = this.form.value.guess.toLowerCase();
+    var guess = this.form.value.guess.toLowerCase();
     const guessResult = this.player.checkGuess(guess);
     var newPrediction = new Prediction(guess, guessResult);
     newPrediction.generateSubpredictions();

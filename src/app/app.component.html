@@ -32,20 +32,32 @@
         <div fxLayout="column" fxLayoutAlign="center">
             <!-- Gameplay Box -->
             <table class="center game-font game-table">
+              <!-- display previous guesses -->
               <tr *ngFor="let prediction of player.predictions">
                 <td *ngFor="let subprediction of prediction.subpredictions"
                     class="{{subprediction.resultLetter}}">
                             {{subprediction.guessLetter}}
                 </td>
               </tr>
-              <tr *ngFor="let n of numSequence(player.remainingGuesses)">
+              <tr>
+                <!-- fill in current guess -->
+                <td *ngFor="let string of form.value.guess.split('')">
+                  {{string}}
+                </td>
+                <!-- fill in empty letters -->
+                <td *ngFor="let i of numSequence(player.answer.length - form.value.guess.length)">
+                  &nbsp;&nbsp;&nbsp;
+                </td>
+              </tr>
+              <!-- generate empty guesses to show number of remaining guesses -->
+              <tr *ngFor="let n of numSequence(player.remainingGuesses - 1)">
                 <td *ngFor="let n of numSequence(player.answer.length)">
                   &nbsp;&nbsp;&nbsp;
                 </td>
               </tr>
             </table>
 
-          <div>
+          <div class="center">
             <h1 *ngIf="player.hasWon">Congratulations, you win!</h1>
             <h1 *ngIf="player.hasLost">Please try again, answer is: {{player.answer}}</h1>
           </div>
