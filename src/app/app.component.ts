@@ -41,13 +41,22 @@ export class AppComponent {
     this.player.updateAllList();
     this.player.checkIfWonOrLost();
     this.guessFormControl.reset('');
+    //this.onClearFormContent();
   }
 
   newGame() {
     console.log('New Game button pressed!');
     this.player = new Player([]);
     this.guessFormControl.reset('');
+    //this.onClearFormContent();
   }
+
+  protected onClearFormContent() {
+    this.form.reset('');
+    Object.keys(this.form.controls).forEach(key => {
+        this.form.controls[key].setErrors(null);
+    });
+}
 
   onCheckBoxChange() {
     console.log('Checkbox changed!');

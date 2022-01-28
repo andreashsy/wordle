@@ -1,78 +1,115 @@
-<h1>Wordle</h1>
+<mat-toolbar color="primary">
+  <mat-toolbar-row>
+    <span>Wordle</span>
+  </mat-toolbar-row>
+</mat-toolbar>
+<div class="content">
+  <div
+  fxLayout="column"
+  fxLayoutAlign="center"
+  >
+    <div fxLayout="column" name="col-1" id="col-1" fxFlex="grow">
+      <mat-card>
+        <input type="checkbox" name="checkbox-rules" (change)="onCheckBoxChange()">
+        <label for="checkbox-rules">Show rules</label>
+        <div name="rules" *ngIf="showRules">
+          <h3>Rules</h3>
+          <ul>
+              <li>Guess a five letter English word</li>
+              <li>You have six attempts</li>
+              <li>Guesses must be a valid word (based on an internal list; not all words included)</li>
+              <li>If a letter is in the word and in the correct position, it appears as green</li>
+              <li>If a letter is in the word but not in the correct position, it appears as yellow</li>
+              <li>If a letter is not in the word, it appears as grey</li>
+          </ul>
+        </div>
+      </mat-card>
+    </div>
 
-<table>
-  <tr *ngFor="let prediction of player.predictions">
-    <td *ngFor="let subprediction of prediction.subpredictions"
-        class="{{subprediction.resultLetter}}">
-                {{subprediction.guessLetter}}
-    </td>
-  </tr>
-  <tr *ngFor="let n of numSequence(player.remainingGuesses)">
-    <td *ngFor="let n of numSequence(player.answer.length)">
-      &nbsp;&nbsp;&nbsp;
-    </td>
-  </tr>
-</table>
 
-<h1 *ngIf="player.hasWon">Congratulations, you win!</h1>
-<h1 *ngIf="player.hasLost">Please try again, answer is: {{player.answer}}</h1>
+    <div fxLayout="column" name="col-2" id="col-2" fxFlex="grow">
+      <mat-card>
+        <div fxLayout="column" fxLayoutAlign="center">
+            <!-- Gameplay Box -->
+            <table class="center game-font game-table">
+              <tr *ngFor="let prediction of player.predictions">
+                <td *ngFor="let subprediction of prediction.subpredictions"
+                    class="{{subprediction.resultLetter}}">
+                            {{subprediction.guessLetter}}
+                </td>
+              </tr>
+              <tr *ngFor="let n of numSequence(player.remainingGuesses)">
+                <td *ngFor="let n of numSequence(player.answer.length)">
+                  &nbsp;&nbsp;&nbsp;
+                </td>
+              </tr>
+            </table>
 
-<form #formDirective="ngForm" [formGroup]="form" (ngSubmit)="processGuess()">
-  <input type="text" formControlName="guess" placeholder="Your guess">
-  <div *ngIf="guessFormControl.hasError('wordNotInList')">
-    Guess must be a valid 5 letter word
+          <div>
+            <h1 *ngIf="player.hasWon">Congratulations, you win!</h1>
+            <h1 *ngIf="player.hasLost">Please try again, answer is: {{player.answer}}</h1>
+          </div>
+
+          <div class="center">
+            <form #formDirective="ngForm" [formGroup]="form" (ngSubmit)="processGuess()">
+              <mat-form-field>
+                <input matInput maxlength="{{player.answer.length}}" formControlName="guess" placeholder="Your guess">
+                <mat-hint *ngIf="guessFormControl.hasError('wordNotInList')">
+                  Must be a valid 5 letter word
+                </mat-hint>
+              </mat-form-field>
+              <button type="submit" [disabled]="player.hasWon || player.hasLost || form.invalid" mat-raised-button color="primary">Submit</button>
+            </form>
+          </div>
+
+          <div class="center">
+            <form (ngSubmit)="newGame()">
+              <button mat-raised-button type="submit">New Game</button>
+            </form>
+          </div>
+        </div>
+      </mat-card>
+    </div>
+
+
+    <div name="col-3" id="col-3" fxFlex="grow">
+      <mat-card>
+        <h4>Green Letters:</h4>
+        <table>
+          <tr>
+            <td *ngFor="let letter of player.greenList" class="M">
+              {{letter}}
+            </td>
+          </tr>
+        </table>
+
+        <h4>Yellow Letters:</h4>
+        <table>
+          <tr>
+            <td *ngFor="let letter of player.yellowList" class="I">
+              {{letter}}
+            </td>
+          </tr>
+        </table>
+
+        <h4>Grey Letters:</h4>
+        <table>
+          <tr>
+            <td *ngFor="let letter of player.greyList" class="N">
+              {{letter}}
+            </td>
+          </tr>
+        </table>
+
+        <h4>White Letters:</h4>
+      <table>
+        <tr>
+          <td *ngFor="let letter of player.whiteList">
+            {{letter}}
+          </td>
+        </tr>
+      </table>
+      </mat-card>
+    </div>
   </div>
-  <button type="submit" [disabled]="player.hasWon || player.hasLost || form.invalid">Submit</button>
-</form>
-<form (ngSubmit)="newGame()">
-  <button type="submit">New Game</button>
-</form>
-<input type="checkbox" name="checkbox-rules" (change)="onCheckBoxChange()">
-<label for="checkbox-rules">Show rules</label>
-<div name="rules" *ngIf="showRules">
-  <h3>Rules</h3>
-  <ul>
-      <li>Guess a five letter English word</li>
-      <li>You have six attempts</li>
-      <li>Guesses must be a valid word (based on an internal list; not all words included)</li>
-      <li>If a letter is in the word and in the correct position, it appears as green</li>
-      <li>If a letter is in the word but not in the correct position, it appears as yellow</li>
-      <li>If a letter is not in the word, it appears as grey</li>
-  </ul>
 </div>
-
-<h4>Green Letters:</h4>
-<table>
-  <tr>
-    <td *ngFor="let letter of player.greenList" class="M">
-      {{letter}}
-    </td>
-  </tr>
-</table>
-
-<h4>Yellow Letters:</h4>
-<table>
-  <tr>
-    <td *ngFor="let letter of player.yellowList" class="I">
-      {{letter}}
-    </td>
-  </tr>
-</table>
-
-<h4>Grey Letters:</h4>
-<table>
-  <tr>
-    <td *ngFor="let letter of player.greyList" class="N">
-      {{letter}}
-    </td>
-  </tr>
-</table>
-
-<h4>White Letters:</h4>
-<table>
-  <tr>
-    <td *ngFor="let letter of player.whiteList">
-      {{letter}}
-    </td>
-  </tr>
-</table>
