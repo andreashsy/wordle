@@ -63,7 +63,7 @@
           </div>
 
           <div class="center">
-            <form #formDirective="ngForm" [formGroup]="form" (ngSubmit)="processGuess()">
+            <form #formDirective="ngForm" [formGroup]="form" (ngSubmit)="processGuess()" [hidden]="player.hasWon || player.hasLost">
               <mat-form-field>
                 <input matInput maxlength="{{player.answer.length}}" formControlName="guess" placeholder="Your guess">
                 <mat-hint *ngIf="guessFormControl.hasError('wordNotInList')">
