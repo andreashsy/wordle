@@ -41,7 +41,7 @@
               </tr>
               <tr *ngIf="player.predictions.length < 6">
                 <!-- fill in current guess -->
-                <td *ngFor="let string of form.value.guess.split('')">
+                <td *ngFor="let string of form.value.guess.toLowerCase().split('')">
                   {{string}}
                 </td>
                 <!-- fill in empty letters -->
