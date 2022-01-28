@@ -1,0 +1,7 @@
+wordle\java\model\Prediction.class
+wordle\java\model\Player.class
+wordle\java\model\Subprediction.class
+wordle\java\services\PlayerService.class
+wordle\java\Constants.class
+wordle\java\controllers\WordleController.class
+wordle\java\JavaApplication.class
