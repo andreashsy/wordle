@@ -47,7 +47,7 @@ export class AppComponent {
   newGame() {
     console.log('New Game button pressed!');
     this.player = new Player([]);
-    this.guessFormControl.reset();
+    this.guessFormControl.reset('');
   }
 
   onCheckBoxChange(event: any) {
