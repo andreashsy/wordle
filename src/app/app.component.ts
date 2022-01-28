@@ -23,6 +23,7 @@ export class AppComponent {
     wordNotInListValidator(this.player.FIVE_LETTER_WORDS_LIST),
   ]);
   showRules: Boolean = false;
+  showHelpers: Boolean = true;
 
   constructor(private fb: FormBuilder) {
     this.form = this.fb.group({
@@ -58,9 +59,14 @@ export class AppComponent {
     });
 }
 
-  onCheckBoxChange() {
-    console.log('Checkbox changed!');
+  onRuleCheckBoxChange() {
+    console.log('Checkbox for rules changed!');
     this.showRules = !this.showRules;
+  }
+
+  onHelperCheckBoxChange() {
+    console.log('Checkbox for helpers changed!');
+    this.showHelpers = !this.showHelpers;
   }
 
   numSequence(n: number): Array<number> {

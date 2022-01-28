@@ -44,7 +44,7 @@ mat-card {
   width: 1em;
 }
 
-.helper-word-list > table > tr > td {
+.helpers > table > tr > td {
   width: 1em;
   text-align: center;
 }
