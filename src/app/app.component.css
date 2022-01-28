@@ -44,7 +44,7 @@ mat-card {
   width: 1em;
 }
 
-.helpers > table > tr > td {
+.table-hint > tr > td {
   width: 1em;
   text-align: center;
 }

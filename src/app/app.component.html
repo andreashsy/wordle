@@ -16,8 +16,8 @@
           <h3>Rules</h3>
           <ul>
               <li>Guess a five letter English word</li>
-              <li>You have six attempts</li>
-              <li>Guesses must be a valid word (based on an internal list; not all words included)</li>
+              <li>You have six attempts</li> 
+              <li>Guesses must be a valid word <b>(based on an internal list; not all words included, might have some weird words)</b></li>
               <li>If a letter is in the word and in the correct position, it appears as green</li>
               <li>If a letter is in the word but not in the correct position, it appears as yellow</li>
               <li>If a letter is not in the word, it appears as grey</li>
@@ -41,7 +41,7 @@
               </tr>
               <tr *ngIf="player.predictions.length < 6">
                 <!-- fill in current guess -->
-                <td *ngFor="let string of form.value.guess.toLowerCase().split('')">
+                <td *ngFor="let string of form.value.guess.toLowerCase().split('').slice(0,this.player.answer.length)">
                   {{string}}
                 </td>
                 <!-- fill in empty letters -->
@@ -86,45 +86,27 @@
 
     <div name="col-3" id="col-3" fxFlex="grow">
       <mat-card>
-        <input type="checkbox" name="checkbox-helpers" (change)="onHelperCheckBoxChange()" checked>
+        <!-- <input type="checkbox" name="checkbox-helpers" (change)="onHelperCheckBoxChange()" checked>
         <label for="checkbox-helpers">Show clues</label>
-        <div name="helpers" class="helpers" *ngIf="showHelpers">
-          <h4>Green Letters:</h4>
-            <table>
+        <div name="helpers" class="helpers" *ngIf="showHelpers">  -->
+          <h4>Clues:</h4>
+            <table class="table-hint">
               <tr>
                 <td *ngFor="let letter of player.greenList" class="M">
                   {{letter}}
                 </td>
-              </tr>
-            </table>
-
-            <h4>Yellow Letters:</h4>
-            <table>
-              <tr>
                 <td *ngFor="let letter of player.yellowList" class="I">
                   {{letter}}
                 </td>
-              </tr>
-            </table>
-
-            <h4>Grey Letters:</h4>
-            <table>
-              <tr>
                 <td *ngFor="let letter of player.greyList" class="N">
+                  {{letter}}
+                </td>
+                <td *ngFor="let letter of player.whiteList">
                   {{letter}}
                 </td>
               </tr>
             </table>
-
-            <h4>White Letters:</h4>
-          <table>
-            <tr>
-              <td *ngFor="let letter of player.whiteList">
-                {{letter}}
-              </td>
-            </tr>
-          </table>
-        </div>
+        <!-- </div> -->
       </mat-card>
     </div>
   </div>
