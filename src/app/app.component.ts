@@ -37,6 +37,7 @@ export class AppComponent {
     var newPrediction = new Prediction(guess, guessResult);
     newPrediction.generateSubpredictions();
     this.player.predictions.push(newPrediction);
+    this.player.updateRemainingGuesses();
     this.player.updateAllList();
     this.player.checkIfWonOrLost();
     this.guessFormControl.reset('');
@@ -48,8 +49,12 @@ export class AppComponent {
     this.guessFormControl.reset('');
   }
 
-  onCheckBoxChange(event: any) {
+  onCheckBoxChange() {
     console.log('Checkbox changed!');
     this.showRules = !this.showRules;
+  }
+
+  numSequence(n: number): Array<number> {
+    return Array(n);
   }
 }

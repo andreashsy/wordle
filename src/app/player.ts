@@ -9,12 +9,15 @@ export class Player {
     greyList: String[] = []
     whiteList: String[] = this.ALL_LETTERS_CONCAT.split("")
 
+
     constructor(
         public predictions:Prediction[],
         public answer:String = "",
-        public maxGuesses:Number = 6,
+        public maxGuesses:number = 6,
         public hasWon:Boolean = false,
-        public hasLost:Boolean = false
+        public hasLost:Boolean = false,
+        public remainingGuesses: number = maxGuesses
+
     ) {
         this.generateRandomAnswer()
         console.log("answer is: " + this.answer)
@@ -128,5 +131,9 @@ export class Player {
         if (this.predictions.length >= this.maxGuesses && !this.hasWon) {
             this.hasLost = true
         }
+    }
+
+    updateRemainingGuesses() {
+      this.remainingGuesses = this.maxGuesses - this.predictions.length
     }
 }

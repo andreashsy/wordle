@@ -5,7 +5,12 @@
     <td *ngFor="let subprediction of prediction.subpredictions"
         class="{{subprediction.resultLetter}}">
                 {{subprediction.guessLetter}}
-    </td>    
+    </td>
+  </tr>
+  <tr *ngFor="let n of numSequence(player.remainingGuesses)">
+    <td *ngFor="let n of numSequence(player.answer.length)">
+      &nbsp;&nbsp;&nbsp;
+    </td>
   </tr>
 </table>
 
@@ -22,7 +27,7 @@
 <form (ngSubmit)="newGame()">
   <button type="submit">New Game</button>
 </form>
-<input type="checkbox" name="checkbox-rules" (change)="onCheckBoxChange($event)">
+<input type="checkbox" name="checkbox-rules" (change)="onCheckBoxChange()">
 <label for="checkbox-rules">Show rules</label>
 <div name="rules" *ngIf="showRules">
   <h3>Rules</h3>
@@ -36,7 +41,7 @@
   </ul>
 </div>
 
-<h3>Green Letters:</h3>
+<h4>Green Letters:</h4>
 <table>
   <tr>
     <td *ngFor="let letter of player.greenList" class="M">
@@ -45,7 +50,7 @@
   </tr>
 </table>
 
-<h3>Yellow Letters:</h3>
+<h4>Yellow Letters:</h4>
 <table>
   <tr>
     <td *ngFor="let letter of player.yellowList" class="I">
@@ -54,7 +59,7 @@
   </tr>
 </table>
 
-<h3>Grey Letters:</h3>
+<h4>Grey Letters:</h4>
 <table>
   <tr>
     <td *ngFor="let letter of player.greyList" class="N">
@@ -63,7 +68,7 @@
   </tr>
 </table>
 
-<h3>White Letters:</h3>
+<h4>White Letters:</h4>
 <table>
   <tr>
     <td *ngFor="let letter of player.whiteList">
