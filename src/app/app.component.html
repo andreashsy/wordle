@@ -39,20 +39,20 @@
                             {{subprediction.guessLetter}}
                 </td>
               </tr>
-              <tr>
+              <tr *ngIf="player.predictions.length < 6">
                 <!-- fill in current guess -->
                 <td *ngFor="let string of form.value.guess.split('')">
                   {{string}}
                 </td>
                 <!-- fill in empty letters -->
                 <td *ngFor="let i of numSequence(player.answer.length - form.value.guess.length)">
-                  &nbsp;&nbsp;&nbsp;
+                  &nbsp;
                 </td>
               </tr>
               <!-- generate empty guesses to show number of remaining guesses -->
               <tr *ngFor="let n of numSequence(player.remainingGuesses - 1)">
                 <td *ngFor="let n of numSequence(player.answer.length)">
-                  &nbsp;&nbsp;&nbsp;
+                  &nbsp;
                 </td>
               </tr>
             </table>

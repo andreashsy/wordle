@@ -64,6 +64,9 @@ export class AppComponent {
   }
 
   numSequence(n: number): Array<number> {
+    if (n <= 0) {
+      return []
+    }
     return Array(n);
   }
 }

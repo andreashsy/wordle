@@ -40,6 +40,10 @@ mat-card {
   margin-bottom: 8px;
 }
 
+.game-table > tr > td {
+  width: 1em;
+}
+
 #col-1 {
   background-color: lightblue;
 }
