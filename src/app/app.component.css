@@ -44,6 +44,11 @@ mat-card {
   width: 1em;
 }
 
+.helper-word-list > table > tr > td {
+  width: 1em;
+  text-align: center;
+}
+
 #col-1 {
   background-color: lightblue;
 }
