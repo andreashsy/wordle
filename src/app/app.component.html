@@ -107,7 +107,7 @@
 
     <div name="col-4" id="col-4" fxFlex="grow" *ngIf="showStatisticsSection">
       <mat-card>
-        <h4>Statistics - {{gameMode}} mode</h4>
+        <h4>Statistics - {{gameMode[0].toUpperCase() + gameMode.slice(1)}} mode</h4>
         <p *ngIf="!gameHistory">No game history</p>
         <div *ngIf="gameHistory">
           <ul>
@@ -128,7 +128,7 @@
       <mat-card>
         <h4>Game mode</h4>
         <input type="checkbox" name="checkboxChaosMode" id="checkboxChaosMode" (click)="onChaosCheckbox()">
-        <label for="checkboxChaosMode">Chaos - answer changes on every guess</label>
+        <label for="checkboxChaosMode">Chaos - Answer changes on every guess</label>
       </mat-card>
     </div>
 
