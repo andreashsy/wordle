@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule, Title } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -29,7 +29,7 @@ import { environment } from '../environments/environment';
       registrationStrategy: 'registerWhenStable:30000'
     })
   ],
-  providers: [],
+  providers: [Title],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

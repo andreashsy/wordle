@@ -9,6 +9,7 @@ import { Player } from './player';
 import { Prediction } from './prediction';
 import { Statistics } from './statistics';
 import { wordNotInListValidator } from './word-not-in-list.directive';
+import {Title} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-root',
@@ -29,12 +30,16 @@ export class AppComponent {
   gameHistory: string = ""
   statistics: Statistics;
 
-  constructor(private fb: FormBuilder) {
+  constructor(
+    private fb: FormBuilder,
+    private titleService: Title
+     ) {
     this.form = this.fb.group({
       guess: this.guessFormControl,
     });
     this.loadGameHistoryFromLocalStorage()
     this.statistics = new Statistics(this.gameHistory)
+    this.setTitle("Worldle")
   }
 
   onSubmitGuess() {
@@ -103,6 +108,10 @@ export class AppComponent {
       return []
     }
     return Array(n);
+  }
+
+  public setTitle (newTitle: string) {
+    this.titleService.setTitle(newTitle);
   }
 
 }
