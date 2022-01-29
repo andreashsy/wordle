@@ -1,4 +1,40 @@
 /**
+ A function for converting hex <-> dec w/o loss of precision.
+ *
+ The problem is that parseInt("0x12345...") isn't precise enough to convert
+ 64-bit integers correctly.
+ *
+ Internally, this uses arrays to encode decimal digits starting with the least
+ significant:
+ 8 = [8]
+ 16 = [6, 1]
+ 1024 = [4, 2, 0, 1]
+ We can implement a general add(x, y) function for these arrays of digits. This turns out to be all we need to do the base conversion.
+
+Since 2x = x + x, an add function lets you compute all the powers of two:
+
+2^0 = [1]
+2^1 = add(2^0, 2^0) = add([1], [1]) = [2]
+2^2 = add(2^1, 2^1) = add([2], [2]) = [4]
+2^3 = add(2^2, 2^2) = add([4], [4]) = [8]
+2^4 = add(2^3, 2^3) = add([8], [8]) = [6, 1]
+2^5 = add(2^4, 2^4) = add([6, 1], [6, 1]) = [2, 3]
+…
+Now, given a hex string, we can easily break it down into binary digits. Each hex digit corresponds to four binary digits. These binary digits tell us how to form the number by adding together powers of two. We already have an add function and the powers of two, so we're all set!
+
+For example, to convert 0x123 from hex to decimal, we:
+
+Convert 0x123 → (binary) 0001 0010 0011
+Compute powers of two:
+ 2^0 = [1]
+ 2^1 = [2]
+ 2^5 = [2, 3]
+ 2^8 = [6, 5, 2]
+Add them up: add([1], add([2], add([2, 3], [6, 5, 2]))) = [1, 9, 2]
+Convert back to a string: [1, 9, 2] → "291".
+ */
+
+/**
  * baseConvert converts a given string with a given encoding alphabet
  * into another base with another given encoding alphabet.  
  * Base is assumed from character sizes. (eg 'abcd' = base 4)

@@ -68,3 +68,10 @@ mat-card {
 #col-4 {
   background-color: pink;
 }
+
+html, body {
+  overflow-x: hidden;
+}
+body {
+  position: relative
+}

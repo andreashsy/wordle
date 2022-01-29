@@ -1,6 +1,6 @@
 {
-  "name": "wordle-angular",
-  "short_name": "wordle-angular",
+  "name": "wordle",
+  "short_name": "wordle",
   "theme_color": "#1976d2",
   "background_color": "#fafafa",
   "display": "standalone",

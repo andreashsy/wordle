@@ -39,11 +39,11 @@
               </tr>
               <tr *ngIf="player.predictions.length < 6">
                 <!-- fill in current guess -->
-                <td *ngFor="let string of form.value.guess.toLowerCase().split('').slice(0,this.player.answer.length)">
+                <td *ngFor="let string of (form.value.guess||'').toLowerCase().split('').slice(0,this.player.answer.length)">
                   {{string}}
                 </td>
                 <!-- fill in empty letters -->
-                <td *ngFor="let i of numSequence(player.answer.length - form.value.guess.length)">
+                <td *ngFor="let i of numSequence(player.answer.length - (form.value.guess||'').length)">
                   &nbsp;
                 </td>
               </tr>
@@ -56,8 +56,8 @@
             </table>
 
           <div class="center">
-            <h1 *ngIf="player.hasWon">Congratulations, you win!</h1>
-            <h1 *ngIf="player.hasLost">Please try again, answer is: {{player.answer}}</h1>
+            <h2 *ngIf="player.hasWon">Congratulations, you win!</h2>
+            <h2 *ngIf="player.hasLost">Try again, answer is: {{player.answer}}</h2>
           </div>
 
           <div class="center">
