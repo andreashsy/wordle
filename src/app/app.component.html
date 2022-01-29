@@ -10,7 +10,7 @@
   >
     <div fxLayout="column" name="col-1" id="col-1" fxFlex="grow">
       <mat-card>
-        <input type="checkbox" name="checkbox-rules" (change)="onRuleCheckBoxChange()">
+        <input type="checkbox" name="checkbox-rules" (change)="onRuleCheckboxChange()">
         <label for="checkbox-rules">Show rules</label>
         <div name="rules" *ngIf="showRules">
           <h3>Rules</h3>
@@ -63,7 +63,7 @@
           </div>
 
           <div class="center">
-            <form #formDirective="ngForm" [formGroup]="form" (ngSubmit)="processGuess()" [hidden]="player.hasWon || player.hasLost">
+            <form #formDirective="ngForm" [formGroup]="form" (ngSubmit)="onSubmitGuess()" [hidden]="player.hasWon || player.hasLost">
               <mat-form-field>
                 <input matInput maxlength="{{player.answer.length}}" formControlName="guess" placeholder="Your guess">
                 <mat-hint *ngIf="guessFormControl.hasError('wordNotInList')">
@@ -75,10 +75,9 @@
           </div>
 
           <div class="center">
-            <form (ngSubmit)="newGame()">
-              <button mat-raised-button type="submit">New Game</button>
-            </form>
+            <button mat-raised-button (click)="onNewGame()">New Game</button>
           </div>
+
         </div>
       </mat-card>
     </div>
@@ -86,28 +85,44 @@
 
     <div name="col-3" id="col-3" fxFlex="grow">
       <mat-card>
-        <!-- <input type="checkbox" name="checkbox-helpers" (change)="onHelperCheckBoxChange()" checked>
-        <label for="checkbox-helpers">Show clues</label>
-        <div name="helpers" class="helpers" *ngIf="showHelpers">  -->
-          <h4>Clues:</h4>
-            <table class="table-hint">
-              <tr>
-                <td *ngFor="let letter of player.greenList" class="M">
-                  {{letter}}
-                </td>
-                <td *ngFor="let letter of player.yellowList" class="I">
-                  {{letter}}
-                </td>
-                <td *ngFor="let letter of player.greyList" class="N">
-                  {{letter}}
-                </td>
-                <td *ngFor="let letter of player.whiteList">
-                  {{letter}}
-                </td>
-              </tr>
-            </table>
-        <!-- </div> -->
+        <h4>Clues:</h4>
+        <table class="table-hint">
+          <tr>
+            <td *ngFor="let letter of player.greenList" class="M">
+              {{letter}}
+            </td>
+            <td *ngFor="let letter of player.yellowList" class="I">
+              {{letter}}
+            </td>
+            <td *ngFor="let letter of player.greyList" class="N">
+              {{letter}}
+            </td>
+            <td *ngFor="let letter of player.whiteList">
+              {{letter}}
+            </td>
+          </tr>
+        </table>
       </mat-card>
     </div>
+
+
+    <div name="col-4" id="col-4" fxFlex="grow">
+      <mat-card>
+        <h4>Statistics:</h4>
+        <p *ngIf="!gameHistory">No game history</p>
+        <div *ngIf="gameHistory">
+          <ul>
+            <li>Total number of games played: {{statistics.totalGamesPlayed}}</li>
+            <li>Wins: {{statistics.numberOfWins}}</li>
+            <li>Losses: {{statistics.numberOfLosses}}</li>
+            <li>Win rate: {{statistics.winRate}}%</li>
+            <li>Total number of guesses: {{statistics.totalNumberOfGuesses}}</li>
+            <li>Average number of guesses: {{statistics.averageNumberOfGuesses}}</li>
+          </ul>
+          <button mat-raised-button color="warn" (click)="onResetStatistics()">Reset Statistics</button>
+        </div>
+      </mat-card>
+    </div>
+
   </div>
 </div>

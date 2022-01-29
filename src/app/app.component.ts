@@ -7,6 +7,7 @@ import {
 } from '@angular/forms';
 import { Player } from './player';
 import { Prediction } from './prediction';
+import { Statistics } from './statistics';
 import { wordNotInListValidator } from './word-not-in-list.directive';
 
 @Component({
@@ -24,14 +25,19 @@ export class AppComponent {
   ]);
   showRules: Boolean = false;
   showHelpers: Boolean = true;
+  readonly KEY_STORAGE: string = "gameHistory-" + "standard" + "_" + this.player.answer.length + "_" + this.player.maxGuesses;
+  gameHistory: string = ""
+  statistics: Statistics;
 
   constructor(private fb: FormBuilder) {
     this.form = this.fb.group({
       guess: this.guessFormControl,
     });
+    this.loadGameHistoryFromLocalStorage()
+    this.statistics = new Statistics(this.gameHistory)
   }
 
-  processGuess() {
+  onSubmitGuess() {
     console.log('Submit button pressed!');
     var guess = this.form.value.guess.toLowerCase();
     const guessResult = this.player.checkGuess(guess);
@@ -41,13 +47,17 @@ export class AppComponent {
     this.player.updateRemainingGuesses();
     this.player.updateAllList();
     this.player.checkIfWonOrLost();
+    this.updateStatisticsIfGameOver();
+    this.statistics = new Statistics(this.gameHistory)
     this.guessFormControl.reset('');
     //this.onClearFormContent();
   }
 
-  newGame() {
+  onNewGame() {
     console.log('New Game button pressed!');
     this.player = new Player([]);
+    this.loadGameHistoryFromLocalStorage()
+    this.statistics = new Statistics(this.gameHistory)
     this.guessFormControl.reset('');
     //this.onClearFormContent();
   }
@@ -57,16 +67,35 @@ export class AppComponent {
     Object.keys(this.form.controls).forEach(key => {
         this.form.controls[key].setErrors(null);
     });
-}
+  }
 
-  onRuleCheckBoxChange() {
+  updateStatisticsIfGameOver() {
+    if (this.player.hasWon) {
+      this.gameHistory += this.player.predictions.length.toString()
+    } else if (this.player.hasLost) {
+      this.gameHistory += this.player.maxGuesses + 1
+    }
+    this.saveGameHistoryToLocalStorage()
+  }
+
+  loadGameHistoryFromLocalStorage() {
+    this.gameHistory = localStorage.getItem(this.KEY_STORAGE) || ""
+  }
+
+  saveGameHistoryToLocalStorage() {
+    localStorage.setItem(this.KEY_STORAGE, this.gameHistory)
+  }
+
+  onRuleCheckboxChange() {
     console.log('Checkbox for rules changed!');
     this.showRules = !this.showRules;
   }
 
-  onHelperCheckBoxChange() {
-    console.log('Checkbox for helpers changed!');
-    this.showHelpers = !this.showHelpers;
+  onResetStatistics() {
+    console.log('Reset Statistics Button Pressed!');
+    localStorage.removeItem(this.KEY_STORAGE)
+    this.statistics = new Statistics("")
+    this.gameHistory = ""
   }
 
   numSequence(n: number): Array<number> {
@@ -75,4 +104,5 @@ export class AppComponent {
     }
     return Array(n);
   }
+
 }
