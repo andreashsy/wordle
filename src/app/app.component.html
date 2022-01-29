@@ -83,7 +83,7 @@
 
     <div name="col-3" id="col-3" fxFlex="grow">
       <mat-card>
-        <h4>Clues:</h4>
+        <h4>Clues</h4>
         <table class="table-hint">
           <tr>
             <td *ngFor="let letter of player.greenList" class="M">
@@ -106,16 +106,17 @@
 
     <div name="col-4" id="col-4" fxFlex="grow" *ngIf="showStatisticsSection">
       <mat-card>
-        <h4>Statistics:</h4>
+        <h4>Statistics</h4>
         <p *ngIf="!gameHistory">No game history</p>
         <div *ngIf="gameHistory">
           <ul>
-            <li>Total number of games played: {{statistics.totalGamesPlayed}}</li>
+            <li>Games played: {{statistics.totalGamesPlayed}}</li>
+            <li>Win rate: {{statistics.winRate}}%</li>
             <li>Wins: {{statistics.numberOfWins}}</li>
             <li>Losses: {{statistics.numberOfLosses}}</li>
-            <li>Win rate: {{statistics.winRate}}%</li>
-            <li>Total number of guesses: {{statistics.totalNumberOfGuesses}}</li>
-            <li>Average number of guesses: {{statistics.averageNumberOfGuesses}}</li>
+            <li>Lifetime guesses: {{statistics.totalNumberOfGuesses}}</li>
+            <li>Average guess for all games: {{statistics.averageNumberOfGuesses}}</li>
+            <li>Average guess for won games: {{statistics.averageNumberOfGuessesInWonGames}}</li>
           </ul>
           <button mat-raised-button color="warn" (click)="onResetStatistics()">Reset Statistics</button>
         </div>
