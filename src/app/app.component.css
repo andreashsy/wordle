@@ -69,6 +69,10 @@ mat-card {
   background-color: pink;
 }
 
+#col-5 {
+  background-color: lightskyblue;
+}
+
 html, body {
   overflow-x: hidden;
 }

@@ -57,7 +57,8 @@
 
           <div class="center">
             <h2 *ngIf="player.hasWon">Congratulations, you win!</h2>
-            <h2 *ngIf="player.hasLost">Try again, answer is: {{player.answer}}</h2>
+            <h2 *ngIf="player.hasLost && !isChaosChecked">Try again, answer is: {{player.answer}}</h2>
+            <h2 *ngIf="player.hasLost && isChaosChecked">Chaos! Answers were: {{player.chaosAnswers.join(', ')}}</h2>
           </div>
 
           <div class="center">
@@ -106,7 +107,7 @@
 
     <div name="col-4" id="col-4" fxFlex="grow" *ngIf="showStatisticsSection">
       <mat-card>
-        <h4>Statistics</h4>
+        <h4>Statistics - {{gameMode}} mode</h4>
         <p *ngIf="!gameHistory">No game history</p>
         <div *ngIf="gameHistory">
           <ul>
@@ -120,6 +121,14 @@
           </ul>
           <button mat-raised-button color="warn" (click)="onResetStatistics()">Reset Statistics</button>
         </div>
+      </mat-card>
+    </div>
+
+    <div name="col-5" id="col-5">
+      <mat-card>
+        <h4>Game mode</h4>
+        <input type="checkbox" name="checkboxChaosMode" id="checkboxChaosMode" (click)="onChaosCheckbox()">
+        <label for="checkboxChaosMode">Chaos - answer changes on every guess</label>
       </mat-card>
     </div>
 

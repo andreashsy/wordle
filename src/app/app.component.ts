@@ -26,9 +26,11 @@ export class AppComponent {
   ]);
   showRulesSection: Boolean = false;
   showStatisticsSection: Boolean = true;
-  readonly KEY_STORAGE: string = "gameHistory-" + "standard" + "_" + this.player.answer.length + "_" + this.player.maxGuesses;
   gameHistory: string = ""
   statistics: Statistics;
+  isChaosChecked: Boolean = false;
+  gameMode: string = "standard"
+  KEY_STORAGE: string = "gameHistory-" + this.gameMode + "_" + this.player.answer.length + "_" + this.player.maxGuesses;
 
   constructor(
     private fb: FormBuilder,
@@ -53,10 +55,15 @@ export class AppComponent {
     this.player.updateAllList();
     this.player.checkIfWonOrLost();
     this.updateStatisticsIfGameOver();
+    this.player.chaosAnswers.push(this.player.answer)
+    if (this.isChaosChecked && !(this.player.hasLost || this.player.hasWon)) {
+      this.player.generateRandomAnswer()
+      this.player.recheckAllGuesses()
+      console.log("Chaos! Answer has changed to: " + this.player.answer)
+    }
     this.statistics = new Statistics(this.gameHistory)
     this.guessFormControl.reset('');
     this.form.reset()
-    //this.onClearFormContent();
   }
 
   onNewGame() {
@@ -65,15 +72,22 @@ export class AppComponent {
     this.loadGameHistoryFromLocalStorage()
     this.statistics = new Statistics(this.gameHistory)
     this.guessFormControl.reset('');
-    //this.onClearFormContent();
   }
 
-  protected onClearFormContent() {
-    this.form.reset('');
-    Object.keys(this.form.controls).forEach(key => {
-        this.form.controls[key].setErrors(null);
-    });
+  onChaosCheckbox() {
+    this.isChaosChecked = !this.isChaosChecked
+    this.updateGameModeAndStorageKey()
+    this.onNewGame()
   }
+  
+  updateGameModeAndStorageKey() {
+    if (this.isChaosChecked) {
+      this.gameMode = "chaos"
+    } else if (!this.isChaosChecked) {
+      this.gameMode = "standard"
+    }
+    this.KEY_STORAGE = "gameHistory-" + this.gameMode + "_" + this.player.answer.length + "_" + this.player.maxGuesses;
+   }
 
   updateStatisticsIfGameOver() {
     if (this.player.hasWon) {

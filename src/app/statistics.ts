@@ -16,7 +16,7 @@ export class Statistics {
         this.totalNumberOfGuesses = this.getTotalGuesses(rawData)
         this.winRate = Math.round((this.numberOfWins * 100 / this.totalGamesPlayed) * 10) / 10
         this.averageNumberOfGuesses = Math.round((this.totalNumberOfGuesses / this.totalGamesPlayed) * 100) / 100
-        this.averageNumberOfGuessesInWonGames = Math.round((this.getTotalGuesses(rawData.replace(/7/g,"")) / this.numberOfWins) * 100) / 100
+        this.averageNumberOfGuessesInWonGames = (Math.round((this.getTotalGuesses(rawData.replace(/7/g,"")) / this.numberOfWins) * 100) / 100) || 0
     }
 
     getNumberOfLosses(rawData: string) {
