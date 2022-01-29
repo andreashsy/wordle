@@ -5,12 +5,16 @@
  * @param  {string} string The string to be encoded into another base.  
  * @param  {string} inputCharacters The characters of the input alphabet (i.e. 0123456789ABCDEF)
  * @param  {string} outputCharacters The characters of the output alphabet (i.e. ABCDEFGHJKLMNPQRSTUVWXYZ234567)
+ * 
+ * Change {boolean} isPadding to enable/disable padding of first character in input/output string
  */
 export function baseConvert(stringToEncode:string, inputCharacters: string, outputCharacters: string) {
     if (stringToEncode == "" || inputCharacters == "" || outputCharacters == "") {
 		return null;
 	}
 
+    var isPadding = true
+    // Adds two arrays for the given base, returning the result.
     const add = (x:number[], y:number[], base:number) => {
         let z = [];
 		const n = Math.max(x.length, y.length);
@@ -27,6 +31,8 @@ export function baseConvert(stringToEncode:string, inputCharacters: string, outp
 		return z;
     }
 
+    // Returns a*x, where x is an array of decimal digits and a is an ordinary
+    // JavaScript number. base is the number base of the array x.
     const multiplyByNumber = (num: number, power: number[], base: number) => {
 		//if (num < 0) return null;
 		if (num === 0) return [];
@@ -77,16 +83,16 @@ export function baseConvert(stringToEncode:string, inputCharacters: string, outp
 	let out = '';
 
 	// Preceding padding characters - Add back in preceeding padding characters.
-	// if(Padding){
-	// 	let inPad = inputAlphabet.charAt(0);
-	// 	let outPad = outputAlphabet.charAt(0);
-	// 	let i=0;
-	// 	while(i<string.length){
-	// 		if (string.charAt(i) !== inPad) break;
-	// 		out += outPad;
-	// 		i++;
-	// 	}
-	// }
+	if(isPadding){
+		let inPad = inputCharacters.charAt(0);
+		let outPad = outputCharacters.charAt(0);
+		let i=0;
+		while(i<stringToEncode.length){
+			if (stringToEncode.charAt(i) !== inPad) break;
+			out += outPad;
+			i++;
+		}
+	}
 
 
 	for (let i = outArray.length - 1; i >= 0; i--) {
