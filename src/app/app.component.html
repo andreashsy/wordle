@@ -63,17 +63,17 @@
           <div class="center">
             <form #formDirective="ngForm" [formGroup]="form" (ngSubmit)="onSubmitGuess()" [hidden]="player.hasWon || player.hasLost">
               <mat-form-field>
-                <input matInput maxlength="{{player.answer.length}}" formControlName="guess" placeholder="Your guess">
+                <input matInput maxlength="{{player.answer.length}}" formControlName="guess" placeholder="Your guess" #guessInput>
                 <mat-hint *ngIf="guessFormControl.hasError('wordNotInList')">
                   Must be a valid 5 letter word
                 </mat-hint>
               </mat-form-field>
-              <button type="submit" [disabled]="player.hasWon || player.hasLost || form.invalid" mat-raised-button color="primary">Submit</button>
+              <button type="submit" [disabled]="player.hasWon || player.hasLost || form.invalid" mat-raised-button color="primary" (click)="guessInput.focus()">Submit</button>
             </form>
           </div>
 
           <div class="center">
-            <button mat-raised-button (click)="onNewGame()">New Game</button>
+            <button mat-raised-button (click)="onNewGame(); guessInput.focus()">New Game</button>
           </div>
 
         </div>

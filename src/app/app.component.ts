@@ -55,6 +55,7 @@ export class AppComponent {
     this.updateStatisticsIfGameOver();
     this.statistics = new Statistics(this.gameHistory)
     this.guessFormControl.reset('');
+    this.form.reset()
     //this.onClearFormContent();
   }
 
