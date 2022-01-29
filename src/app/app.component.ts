@@ -24,8 +24,8 @@ export class AppComponent {
     Validators.required,
     wordNotInListValidator(this.player.FIVE_LETTER_WORDS_LIST),
   ]);
-  showRules: Boolean = false;
-  showHelpers: Boolean = true;
+  showRulesSection: Boolean = false;
+  showStatisticsSection: Boolean = true;
   readonly KEY_STORAGE: string = "gameHistory-" + "standard" + "_" + this.player.answer.length + "_" + this.player.maxGuesses;
   gameHistory: string = ""
   statistics: Statistics;
@@ -39,7 +39,7 @@ export class AppComponent {
     });
     this.loadGameHistoryFromLocalStorage()
     this.statistics = new Statistics(this.gameHistory)
-    this.setTitle("Worldle")
+    this.setTitle("Wordle")
   }
 
   onSubmitGuess() {
@@ -91,9 +91,12 @@ export class AppComponent {
     localStorage.setItem(this.KEY_STORAGE, this.gameHistory)
   }
 
-  onRuleCheckboxChange() {
-    console.log('Checkbox for rules changed!');
-    this.showRules = !this.showRules;
+  onRulesButtonPress() {
+    this.showRulesSection = !this.showRulesSection;
+  }
+
+  onStatisticsButtonPress() {
+    this.showStatisticsSection = !this.showStatisticsSection;
   }
 
   onResetStatistics() {

@@ -1,6 +1,8 @@
 <mat-toolbar color="primary">
-  <mat-toolbar-row>
+  <mat-toolbar-row class="toolbar-header"> 
+    <button mat-raised-button (click)="onRulesButtonPress()">Rules</button>
     <span>Wordle</span>
+    <button mat-raised-button (click)="onStatisticsButtonPress()">Statistics</button>
   </mat-toolbar-row>
 </mat-toolbar>
 <div class="content">
@@ -8,21 +10,17 @@
   fxLayout="column"
   fxLayoutAlign="center"
   >
-    <div fxLayout="column" name="col-1" id="col-1" fxFlex="grow">
+    <div fxLayout="column" name="col-1" id="col-1" fxFlex="grow" *ngIf="showRulesSection">
       <mat-card>
-        <input type="checkbox" name="checkbox-rules" (change)="onRuleCheckboxChange()">
-        <label for="checkbox-rules">Show rules</label>
-        <div name="rules" *ngIf="showRules">
-          <h3>Rules</h3>
-          <ul>
-              <li>Guess a five letter English word</li>
-              <li>You have six attempts</li> 
-              <li>Guesses must be a valid word <b>(based on an internal list; not all words included, might have some weird words)</b></li>
-              <li>If a letter is in the word and in the correct position, it appears as green</li>
-              <li>If a letter is in the word but not in the correct position, it appears as yellow</li>
-              <li>If a letter is not in the word, it appears as grey</li>
-          </ul>
-        </div>
+        <h3>Rules</h3>
+        <ul>
+            <li>Guess a five letter English word</li>
+            <li>You have six attempts</li> 
+            <li>Guesses must be a valid word <b>(based on an internal list; not all words included, might have some weird words)</b></li>
+            <li>If a letter is in the word and in the correct position, it appears as green</li>
+            <li>If a letter is in the word but not in the correct position, it appears as yellow</li>
+            <li>If a letter is not in the word, it appears as grey</li>
+        </ul>
       </mat-card>
     </div>
 
@@ -106,7 +104,7 @@
     </div>
 
 
-    <div name="col-4" id="col-4" fxFlex="grow">
+    <div name="col-4" id="col-4" fxFlex="grow" *ngIf="showStatisticsSection">
       <mat-card>
         <h4>Statistics:</h4>
         <p *ngIf="!gameHistory">No game history</p>
@@ -126,3 +124,5 @@
 
   </div>
 </div>
+
+

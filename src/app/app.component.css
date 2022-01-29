@@ -15,6 +15,10 @@ table, th, td {
     background-color: lightgrey;
 }
 
+.toolbar-header {
+  justify-content: space-between;
+}
+
 mat-card {
   margin-bottom: 8px;
   margin-right: 8px;
