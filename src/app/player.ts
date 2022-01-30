@@ -130,13 +130,17 @@ export class Player {
         for (var prediction of this.predictions) {
             if (prediction.result === "MMMMM") {
                 this.hasWon = true
+                break
             }
+            this.hasWon = false
         }
     }
 
     checkIfLost() {
         if (this.predictions.length >= this.maxGuesses && !this.hasWon) {
             this.hasLost = true
+        } else {
+            this.hasLost = false
         }
     }
 

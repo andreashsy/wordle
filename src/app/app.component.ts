@@ -59,6 +59,19 @@ export class AppComponent {
     if (this.isChaosChecked && !(this.player.hasLost || this.player.hasWon)) {
       this.player.generateRandomAnswer()
       this.player.recheckAllGuesses()
+      var recheckCount = 0
+      while (recheckCount < 5) {
+        this.player.checkIfWon()
+        console.log("Has player won? " + this.player.hasWon)
+        if (this.player.hasWon) {
+          console.log("Answer has already won, repicking...")
+          this.player.generateRandomAnswer()
+          this.player.recheckAllGuesses()
+        } else {
+          break
+        }
+        recheckCount ++
+      }
       console.log("Chaos! Answer has changed to: " + this.player.answer)
     }
     this.statistics = new Statistics(this.gameHistory)
