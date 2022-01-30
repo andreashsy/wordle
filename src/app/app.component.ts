@@ -53,7 +53,7 @@ export class AppComponent {
     newPrediction.generateSubpredictions();
     this.player.pushPrediction(newPrediction);
     this.player.updateRemainingGuesses();
-    this.player.updateAllList();
+    this.player.updateAllHelperLists();
     this.player.checkIfWonOrLost();
     this.updateStatisticsIfGameOver();
     this.player.saveAnswer();
@@ -69,7 +69,7 @@ export class AppComponent {
           this.player.generateRandomAnswer()
           this.player.recheckAllGuesses()
         } else {
-          this.player.updateAllList();
+          this.player.updateAllHelperLists();
           break
         }
         recheckCount ++

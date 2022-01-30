@@ -88,16 +88,16 @@
         <h4>Clues</h4>
         <table class="table-hint">
           <tr>
-            <td *ngFor="let letter of player.greenList" class="M">
+            <td *ngFor="let letter of player.cluehelper.greenList" class="M">
               {{letter}}
             </td>
-            <td *ngFor="let letter of player.yellowList" class="I">
+            <td *ngFor="let letter of player.cluehelper.yellowList" class="I">
               {{letter}}
             </td>
-            <td *ngFor="let letter of player.greyList" class="N">
+            <td *ngFor="let letter of player.cluehelper.greyList" class="N">
               {{letter}}
             </td>
-            <td *ngFor="let letter of player.whiteList">
+            <td *ngFor="let letter of player.cluehelper.whiteList">
               {{letter}}
             </td>
           </tr>
