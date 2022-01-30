@@ -68,6 +68,8 @@ export class AppComponent {
           this.player.generateRandomAnswer()
           this.player.recheckAllGuesses()
         } else {
+          this.player.resetAllLists();
+          this.player.updateAllList();
           break
         }
         recheckCount ++

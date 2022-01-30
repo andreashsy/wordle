@@ -88,6 +88,13 @@ export class Player {
         }
     }
 
+    resetAllLists() {
+        this.greenList = []
+        this.yellowList = []
+        this.greyList = []
+        this.whiteList = this.ALL_LETTERS_CONCAT.split("")
+    }
+
     stringArrayRemove(array: String[], value: String) {
         for (var i= 0; i < array.length; i++) {
             if (array[i] === value) {
