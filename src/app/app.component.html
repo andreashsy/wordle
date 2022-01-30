@@ -20,6 +20,7 @@
             <li>If a letter is in the word and in the correct position, it appears as green</li>
             <li>If a letter is in the word but not in the correct position, it appears as yellow</li>
             <li>If a letter is not in the word, it appears as grey</li>
+            <li><b>Chaos mode:</b> Everytime you guess incorrectly, the answer changes</li>
         </ul>
       </mat-card>
     </div>
@@ -126,9 +127,9 @@
 
     <div name="col-5" id="col-5">
       <mat-card>
-        <h4>Game mode</h4>
+        <h4>Game mode (check rules)</h4>
         <input type="checkbox" name="checkboxChaosMode" id="checkboxChaosMode" (click)="onChaosCheckbox()">
-        <label for="checkboxChaosMode">Chaos - Answer changes on every guess</label>
+        <label for="checkboxChaosMode">Chaos</label>
       </mat-card>
     </div>
 
