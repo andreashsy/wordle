@@ -14,13 +14,13 @@
       <mat-card>
         <h3>Rules</h3>
         <ul>
-            <li>Guess a five letter English word</li>
+            <li>Guess a five letter word</li>
             <li>You have six attempts</li> 
-            <li>Guesses must be a valid word <b>(based on an internal list; not all words included, might have some weird words)</b></li>
+            <li>Guesses must be a valid word <b>(based on an internal list; not all words included, might have some weird words. Please message me if you come across them)</b></li>
             <li>If a letter is in the word and in the correct position, it appears as green</li>
             <li>If a letter is in the word but not in the correct position, it appears as yellow</li>
             <li>If a letter is not in the word, it appears as grey</li>
-            <li><b>Chaos mode:</b> Everytime you guess incorrectly, the answer changes</li>
+            <li><b>Chaos mode:</b> Every time you guess incorrectly, the answer changes</li>
         </ul>
       </mat-card>
     </div>
@@ -127,7 +127,7 @@
 
     <div name="col-5" id="col-5">
       <mat-card>
-        <h4>Game mode (check rules)</h4>
+        <h4>Game mode (refer to rules)</h4>
         <input type="checkbox" name="checkboxChaosMode" id="checkboxChaosMode" (click)="onChaosCheckbox()">
         <label for="checkboxChaosMode">Chaos</label>
       </mat-card>
