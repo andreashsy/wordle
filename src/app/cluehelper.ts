@@ -13,7 +13,7 @@ export class ClueHelper {
         
     }
 
-    updateAllList() {
+    updateAllLists() {
         this.resetAllLists()
         this.updateYellowList()
         this.updateGreenList()

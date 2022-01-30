@@ -85,6 +85,6 @@ export class Player {
     }
 
     updateAllHelperLists() {
-        this.cluehelper.updateAllList()
+        this.cluehelper.updateAllLists()
     }
 }
