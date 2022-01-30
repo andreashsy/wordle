@@ -10,6 +10,7 @@ import { Prediction } from './prediction';
 import { Statistics } from './statistics';
 import { wordNotInListValidator } from './word-not-in-list.directive';
 import {Title} from "@angular/platform-browser";
+import { ChaosPlayer } from './chaosplayer';
 
 @Component({
   selector: 'app-root',
@@ -50,12 +51,12 @@ export class AppComponent {
     const guessResult = this.player.checkGuess(guess);
     var newPrediction = new Prediction(guess, guessResult);
     newPrediction.generateSubpredictions();
-    this.player.predictions.push(newPrediction);
+    this.player.pushPrediction(newPrediction);
     this.player.updateRemainingGuesses();
     this.player.updateAllList();
     this.player.checkIfWonOrLost();
     this.updateStatisticsIfGameOver();
-    this.player.chaosAnswers.push(this.player.answer)
+    this.player.saveAnswer();
     if (this.isChaosChecked && !(this.player.hasLost || this.player.hasWon)) {
       this.player.generateRandomAnswer()
       this.player.recheckAllGuesses()
@@ -68,7 +69,6 @@ export class AppComponent {
           this.player.generateRandomAnswer()
           this.player.recheckAllGuesses()
         } else {
-          this.player.resetAllLists();
           this.player.updateAllList();
           break
         }
