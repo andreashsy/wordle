@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1643537679558,
+  "timestamp": 1643772761747,
   "index": "/wordle/index.html",
   "assetGroups": [
     {
@@ -13,7 +13,7 @@
       "urls": [
         "/wordle/favicon.ico",
         "/wordle/index.html",
-        "/wordle/main.cee6db0c286d3930.js",
+        "/wordle/main.888b69cad4414ebe.js",
         "/wordle/manifest.webmanifest",
         "/wordle/polyfills.1c3c80affd11de34.js",
         "/wordle/runtime.f58be62e9db4118f.js",
@@ -110,8 +110,8 @@
     "/wordle/assets/icons/manifest-icon-192.maskable.png": "9d7484a6f1d5639a6d91f96eaa66e10390b6a4a2",
     "/wordle/assets/icons/manifest-icon-512.maskable.png": "7b3068e4329f9443db0926f53d4ade123030f959",
     "/wordle/favicon.ico": "d356d2f1459547809b34d94348ece490c34051f8",
-    "/wordle/index.html": "f4022583323a034d0e40503b2ac1c50e1b8f45c8",
-    "/wordle/main.cee6db0c286d3930.js": "40b7b547e79543b1c34c9b52f27a557509237b6c",
+    "/wordle/index.html": "19f6135bd04389b94aa74d8dd44d1da413e294fa",
+    "/wordle/main.888b69cad4414ebe.js": "11be1374f7e9ba815ddf8a1036ff0e703ec9e319",
     "/wordle/manifest.webmanifest": "4dc5dcbbcc3e14a2ef48286298aaa45973ba82f2",
     "/wordle/polyfills.1c3c80affd11de34.js": "a1f5a5222d14addf0b258a56c1bf197bcf274c81",
     "/wordle/runtime.f58be62e9db4118f.js": "824a6f739cf8328e0e700193fb79bf980b464cff",
