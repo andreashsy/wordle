@@ -74,7 +74,7 @@
             </form>
           </div>
 
-          <div class="center">
+          <div class="center"  *ngIf="player.hasWon || player.hasLost">
             <button mat-raised-button (click)="onNewGame(); guessInput.focus()">New Game</button>
           </div>
 
