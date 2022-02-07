@@ -1,6 +1,6 @@
 # Wordle (written in java, with spring boot and thymeleaf)  
 
-Link to github pages deployment (written in typescript / Angular) (latest): https://andreashsy.github.io/wordle/
+Link to github pages deployment (written in typescript / Angular) (latest): https://andreashsy.github.io/wordle/  
 Link to heroku deployment (written in java) (more outdated): https://mywordle.herokuapp.com/  
 
 Objective of the game:  
