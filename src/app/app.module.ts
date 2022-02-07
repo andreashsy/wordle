@@ -9,6 +9,8 @@ import { MaterialModule } from './material.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
+import { HttpClientModule } from '@angular/common/http';
+import { WordListService } from './wordlist.service';
 
 @NgModule({
   declarations: [
@@ -22,6 +24,7 @@ import { environment } from '../environments/environment';
     BrowserAnimationsModule,
     MaterialModule,
     FlexLayoutModule,
+    HttpClientModule,
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: environment.production,
       // Register the ServiceWorker as soon as the app is stable
@@ -29,7 +32,8 @@ import { environment } from '../environments/environment';
       registrationStrategy: 'registerWhenStable:30000'
     })
   ],
-  providers: [Title],
+  providers: [Title,
+              WordListService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

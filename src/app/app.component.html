@@ -1,5 +1,5 @@
 <mat-toolbar color="primary">
-  <mat-toolbar-row class="toolbar-header"> 
+  <mat-toolbar-row class="toolbar"> 
     <button mat-raised-button (click)="onRulesButtonPress()">Rules</button>
     <span>Wordle</span>
     <button mat-raised-button (click)="onStatisticsButtonPress()">Statistics</button>
@@ -40,11 +40,11 @@
               </tr>
               <tr *ngIf="player.predictions.length < 6">
                 <!-- fill in current guess -->
-                <td *ngFor="let string of (form.value.guess||'').toLowerCase().split('').slice(0,this.player.answer.length)">
+                <td *ngFor="let string of (gameForm.value.guess||'').toLowerCase().split('').slice(0,this.player.answer.length)">
                   {{string}}
                 </td>
                 <!-- fill in empty letters -->
-                <td *ngFor="let i of numSequence(player.answer.length - (form.value.guess||'').length)">
+                <td *ngFor="let i of numSequence(player.answer.length - (gameForm.value.guess||'').length)">
                   &nbsp;
                 </td>
               </tr>
@@ -63,14 +63,14 @@
           </div>
 
           <div class="center">
-            <form #formDirective="ngForm" [formGroup]="form" (ngSubmit)="onSubmitGuess()" [hidden]="player.hasWon || player.hasLost">
+            <form #formDirective="ngForm" [formGroup]="gameForm" (ngSubmit)="onSubmitGuess()" [hidden]="player.hasWon || player.hasLost">
               <mat-form-field>
                 <input matInput maxlength="{{player.answer.length}}" formControlName="guess" placeholder="Your guess" #guessInput>
                 <mat-hint *ngIf="guessFormControl.hasError('wordNotInList')">
                   Must be a valid 5 letter word
                 </mat-hint>
               </mat-form-field>
-              <button type="submit" [disabled]="player.hasWon || player.hasLost || form.invalid" mat-raised-button color="primary" (click)="guessInput.focus()">Submit</button>
+              <button type="submit" [disabled]="player.hasWon || player.hasLost || gameForm.invalid" mat-raised-button color="primary" (click)="guessInput.focus()">Submit</button>
             </form>
           </div>
 
@@ -133,7 +133,54 @@
       </mat-card>
     </div>
 
+    <div name="col-6" id="col-6">
+      <mat-card>
+        <h4>Suggest Add/Remove Words</h4>
+        <p>Please suggest words to add/remove</p>
+        <form [formGroup]="addForm" (ngSubmit)="onAddWord()">
+          <mat-form-field>
+            <input matInput type="text" placeholder="Word to add" formControlName="wordAdd">
+          </mat-form-field>
+          <button type="submit" mat-raised-button color="primary">Suggest</button>
+        </form>
+        <form [formGroup]="removeForm" (ngSubmit)="onRemoveWord()">
+          <mat-form-field>
+            <input matInput type="text" placeholder="Word to remove" formControlName="wordRemove">
+          </mat-form-field>
+          <button type="submit" mat-raised-button color="primary">Suggest</button>
+        </form>
+        <p>Suggestions will be reviewed</p>
+      </mat-card>
+    </div>
+
+    <div name="col-7" id="col-7">
+      <mat-card>
+        <h4>Contact</h4>
+        <form [formGroup]="contactForm" (ngSubmit)="onSubmitContact()">
+          <div fxLayout="column">
+            <mat-form-field>
+              <input matInput type="text" placeholder="Name" formControlName="name">
+            </mat-form-field>
+            <mat-form-field>
+              <input matInput type="text" placeholder="Contact" formControlName="contact">
+            </mat-form-field>
+            <mat-form-field>
+              <mat-label>Leave a message</mat-label>
+              <textarea matInput cols="100" rows="1" formControlName="comments"></textarea>
+            </mat-form-field>
+          </div>
+          <button type="submit" mat-raised-button color="primary">Send</button>
+        </form>
+      </mat-card>
+    </div>
+
   </div>
 </div>
 
-
+<mat-toolbar color="primary">
+  <mat-toolbar-row class="toolbar"> 
+    <button mat-raised-button (click)="onAddRemoveWordsButtonPress()">Edit Words</button>
+    <span></span>
+    <button mat-raised-button (click)="onContactButtonPress()">Contact</button>
+  </mat-toolbar-row>
+</mat-toolbar>

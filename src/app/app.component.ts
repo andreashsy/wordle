@@ -11,6 +11,7 @@ import { Statistics } from './statistics';
 import { wordNotInListValidator } from './word-not-in-list.directive';
 import {Title} from "@angular/platform-browser";
 import { ChaosPlayer } from './chaosplayer';
+import { WordListService } from './wordlist.service';
 
 @Component({
   selector: 'app-root',
@@ -19,14 +20,23 @@ import { ChaosPlayer } from './chaosplayer';
 })
 export class AppComponent {
   title = 'wordle-angular';
-  form: FormGroup;
+  gameForm: FormGroup;
+  addForm: FormGroup;
+  removeForm: FormGroup;
+  contactForm: FormGroup;
   player: Player = new Player([]);
+  addFormControl = new FormControl('', 
+    [Validators.required])
+  removeFormControl = new FormControl('', 
+  [Validators.required])
   guessFormControl = new FormControl('', [
     Validators.required,
     wordNotInListValidator(this.player.FIVE_LETTER_WORDS_LIST),
   ]);
   showRulesSection: Boolean = false;
   showStatisticsSection: Boolean = true;
+  showAddRemoveWordsSection: Boolean = false;
+  showContactSection: Boolean = false;
   gameHistory: string = ""
   statistics: Statistics;
   isChaosChecked: Boolean = false;
@@ -35,11 +45,23 @@ export class AppComponent {
 
   constructor(
     private fb: FormBuilder,
-    private titleService: Title
+    private titleService: Title,
+    private wordListSvc: WordListService
      ) {
-    this.form = this.fb.group({
+    this.gameForm = this.fb.group({
       guess: this.guessFormControl,
     });
+    this.addForm = this.fb.group({
+      wordAdd: this.addFormControl
+    })
+    this.removeForm = this.fb.group({
+      wordRemove: this.removeFormControl
+    })
+    this.contactForm = this.fb.group({
+      name: new FormControl(''),
+      contact: new FormControl(''),
+      comments: new FormControl('')
+    })
     this.loadGameHistoryFromLocalStorage()
     this.statistics = new Statistics(this.gameHistory)
     this.setTitle("Wordle")
@@ -47,7 +69,7 @@ export class AppComponent {
 
   onSubmitGuess() {
     console.log('Submit button pressed!');
-    var guess = this.form.value.guess.toLowerCase();
+    var guess = this.gameForm.value.guess.toLowerCase();
     const guessResult = this.player.checkGuess(guess);
     var newPrediction = new Prediction(guess, guessResult);
     newPrediction.generateSubpredictions();
@@ -78,7 +100,7 @@ export class AppComponent {
     }
     this.statistics = new Statistics(this.gameHistory)
     this.guessFormControl.reset('');
-    this.form.reset()
+    this.gameForm.reset()
   }
 
   onNewGame() {
@@ -121,12 +143,37 @@ export class AppComponent {
     localStorage.setItem(this.KEY_STORAGE, this.gameHistory)
   }
 
+  onAddWord() {
+    console.info("Add word: ", this.addForm.value.wordAdd)
+    this.wordListSvc.toAddList(this.addForm.value.wordAdd)
+    this.addForm.reset()
+  }
+
+  onRemoveWord() {
+    console.info("Remove word: ", this.removeForm.value.wordRemove)
+    this.wordListSvc.toRemoveList(this.removeForm.value.wordRemove)
+    this.removeForm.reset()
+  }
+
+  onSubmitContact() {
+    console.info("Comments: ", this.contactForm.value.comments)
+    this.contactForm.reset()
+  }
+
   onRulesButtonPress() {
     this.showRulesSection = !this.showRulesSection;
   }
 
   onStatisticsButtonPress() {
     this.showStatisticsSection = !this.showStatisticsSection;
+  }
+
+  onAddRemoveWordsButtonPress() {
+    this.showAddRemoveWordsSection = !this.showAddRemoveWordsSection;
+  }
+
+  onContactButtonPress() {
+    this.showContactSection = !this.showContactSection;
   }
 
   onResetStatistics() {
