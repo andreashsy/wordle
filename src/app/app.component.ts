@@ -43,6 +43,10 @@ export class AppComponent {
   gameMode: string = "standard"
   KEY_STORAGE: string = "gameHistory-" + this.gameMode + "_" + this.player.answer.length + "_" + this.player.maxGuesses;
 
+
+  testResponse: string = "DEFAULT"
+
+
   constructor(
     private fb: FormBuilder,
     private titleService: Title,
@@ -146,12 +150,24 @@ export class AppComponent {
   onAddWord() {
     console.info("Add word: ", this.addForm.value.wordAdd)
     this.wordListSvc.toAddList(this.addForm.value.wordAdd)
+      .then(result => {
+        this.testResponse = JSON.stringify(result)
+      })
+      .catch(result => {
+        this.testResponse = JSON.stringify(result)
+      })
     this.addForm.reset()
   }
 
   onRemoveWord() {
     console.info("Remove word: ", this.removeForm.value.wordRemove)
     this.wordListSvc.toRemoveList(this.removeForm.value.wordRemove)
+      .then(result => {
+        this.testResponse = JSON.stringify(result)
+      })
+      .catch(result => {
+        this.testResponse = JSON.stringify(result)
+      })
     this.removeForm.reset()
   }
 

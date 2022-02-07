@@ -137,6 +137,7 @@
       <mat-card>
         <h4>Suggest Add/Remove Words</h4>
         <p>Please suggest words to add/remove</p>
+        <p>{{testResponse}}</p>
         <form [formGroup]="addForm" (ngSubmit)="onAddWord()">
           <mat-form-field>
             <input matInput type="text" placeholder="Word to add" formControlName="wordAdd">
