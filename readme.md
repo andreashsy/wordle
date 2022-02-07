@@ -1,6 +1,7 @@
 # Wordle (written in java, with spring boot and thymeleaf)
 
-Link to heroku deployment: https://mywordle.herokuapp.com/
+Link to github pages deployment: andreashsy.github.io/wordle/
+Link to heroku deployment (more outdated): https://mywordle.herokuapp.com/
 
 Objective of the game: 
 Guess a five-letter word
