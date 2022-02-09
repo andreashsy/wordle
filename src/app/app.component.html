@@ -140,8 +140,7 @@
     <div name="col-6" id="col-6" *ngIf="showAddRemoveWordsSection">
       <mat-card>
         <h4>Suggest Add/Remove Words</h4>
-        <p>Please suggest words to add/remove</p>
-        <div *ngIf="addWordList != '*****'; else loadingText">
+        <div *ngIf="addWordList != '*****'; else loadingText6">
           <form [formGroup]="addForm" (ngSubmit)="onAddWord()">
             <mat-form-field>
               <input matInput type="text" placeholder="Word to add" formControlName="wordAdd">
@@ -164,41 +163,48 @@
             <button type="submit" mat-raised-button color="primary" [disabled]="removeForm.invalid">Suggest</button>
           </form>
         </div>
-        <ng-template #loadingText>
+        <ng-template #loadingText6>
           <p>Application not able to connect to database</p>
         </ng-template>
-        <p>Suggestions will be reviewed</p>
-        <p *ngIf="addWordList != '0'; else addListZero">Current length of add list: {{addWordList.split(",").length}}</p>
-        <ng-template #addListZero>
-          <p>Current length of add list: 0</p>
-        </ng-template>
-        <p *ngIf="removeWordList != '0'; else removeListZero">Current length of remove list: {{removeWordList.split(",").length}}</p>
-        <ng-template #removeListZero>
-          <p>Current length of remove list: 0</p>
-        </ng-template>
+        <div *ngIf="addWordList != '*****'">
+          <p>Suggestions will be reviewed</p>
+          <p *ngIf="addWordList != '0'; else addListZero">Current length of add list: {{addWordList.split(",").length}}</p>
+          <ng-template #addListZero>
+            <p>Current length of add list: 0</p>
+          </ng-template>
+          <p *ngIf="removeWordList != '0'; else removeListZero">Current length of remove list: {{removeWordList.split(",").length}}</p>
+          <ng-template #removeListZero>
+            <p>Current length of remove list: 0</p>
+          </ng-template>
+        </div>
       </mat-card>
     </div>
 
 
 
-    <div name="col-7" id="col-7">
+    <div name="col-7" id="col-7" *ngIf="showContactSection">
       <mat-card>
         <h4>Contact</h4>
-        <form [formGroup]="contactForm" (ngSubmit)="onSubmitContact()">
-          <div fxLayout="column">
-            <mat-form-field>
-              <input matInput type="text" placeholder="Name" formControlName="name">
-            </mat-form-field>
-            <mat-form-field>
-              <input matInput type="text" placeholder="Contact (for getting back to you)" formControlName="contact">
-            </mat-form-field>
-            <mat-form-field>
-              <mat-label>Leave a message</mat-label>
-              <textarea matInput cols="100" rows="1" formControlName="comments"></textarea>
-            </mat-form-field>
-          </div>
-          <button type="submit" mat-raised-button color="primary" [disabled]="contactForm.invalid">Send</button>
-        </form>
+        <div *ngIf="addWordList != '*****'; else loadingText7">
+          <form [formGroup]="contactForm" (ngSubmit)="onSubmitContact()">
+            <div fxLayout="column">
+              <mat-form-field>
+                <input matInput type="text" placeholder="Name" formControlName="name">
+              </mat-form-field>
+              <mat-form-field>
+                <input matInput type="text" placeholder="Contact (for getting back to you)" formControlName="contact">
+              </mat-form-field>
+              <mat-form-field>
+                <mat-label>Leave a message</mat-label>
+                <textarea matInput cols="100" rows="1" formControlName="comments"></textarea>
+              </mat-form-field>
+            </div>
+            <button type="submit" mat-raised-button color="primary" [disabled]="contactForm.invalid">Send</button>
+          </form>
+        </div>
+        <ng-template #loadingText7>
+          <p>Application not able to connect to database</p>
+        </ng-template>
       </mat-card>
     </div>
   </div>

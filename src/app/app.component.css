@@ -70,15 +70,15 @@ mat-card {
 }
 
 #col-5 {
-  background-color: lightskyblue;
+  background-color: lightblue;
 }
 
 #col-6 {
-  background-color: lightskyblue;
+  background-color: lightgreen;
 }
 
 #col-7 {
-  background-color: lightskyblue;
+  background-color: rgb(255, 255, 148);
 }
 
 html, body {
