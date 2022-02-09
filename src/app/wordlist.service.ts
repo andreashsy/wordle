@@ -1,12 +1,13 @@
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { lastValueFrom } from "rxjs";
+import { AppConstants } from "./constants";
 
 @Injectable()
 export class WordListService {
-
-    urlToEditWords: string = "http://localhost:8080/api/word"
-    urlToGetWordlist: string = "http://localhost:8080/api/getWords"
+    
+    urlToEditWords: string = AppConstants.Network.URL_BASE + "api/word"
+    urlToGetWordlist: string = AppConstants.Network.URL_BASE + "api/getWords"
 
     headers: HttpHeaders = new HttpHeaders()
         .set("Content-Type", "text/plain")
