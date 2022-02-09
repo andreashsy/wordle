@@ -8,10 +8,11 @@ import {
 import { Player } from './player';
 import { Prediction } from './prediction';
 import { Statistics } from './statistics';
-import { wordNotInListValidator } from './word-not-in-list.directive';
+import { wordInListValidator, wordNotInListValidator } from './word-not-in-list.directive';
 import {Title} from "@angular/platform-browser";
 import { ChaosPlayer } from './chaosplayer';
 import { WordListService } from './wordlist.service';
+import { CommentService } from './comment.service';
 
 @Component({
   selector: 'app-root',
@@ -26,12 +27,19 @@ export class AppComponent {
   contactForm: FormGroup;
   player: Player = new Player([]);
   addFormControl = new FormControl('', 
-    [Validators.required])
+    [Validators.required,
+    Validators.minLength(5),
+    Validators.maxLength(5),
+    Validators.pattern('^[a-zA-Z]*$'),
+    wordInListValidator(this.player.FIVE_LETTER_WORDS_LIST)
+  ])
   removeFormControl = new FormControl('', 
-  [Validators.required])
+    [Validators.required,
+    wordNotInListValidator(this.player.FIVE_LETTER_WORDS_LIST)
+  ])
   guessFormControl = new FormControl('', [
     Validators.required,
-    wordNotInListValidator(this.player.FIVE_LETTER_WORDS_LIST),
+    wordNotInListValidator(this.player.FIVE_LETTER_WORDS_LIST)
   ]);
   showRulesSection: Boolean = false;
   showStatisticsSection: Boolean = true;
@@ -42,7 +50,8 @@ export class AppComponent {
   isChaosChecked: Boolean = false;
   gameMode: string = "standard"
   KEY_STORAGE: string = "gameHistory-" + this.gameMode + "_" + this.player.answer.length + "_" + this.player.maxGuesses;
-
+  addWordList: string = "*****"
+  removeWordList: string = "*****"
 
   testResponse: string = "DEFAULT"
 
@@ -50,7 +59,8 @@ export class AppComponent {
   constructor(
     private fb: FormBuilder,
     private titleService: Title,
-    private wordListSvc: WordListService
+    private wordListSvc: WordListService,
+    private commentSvc: CommentService
      ) {
     this.gameForm = this.fb.group({
       guess: this.guessFormControl,
@@ -62,13 +72,18 @@ export class AppComponent {
       wordRemove: this.removeFormControl
     })
     this.contactForm = this.fb.group({
-      name: new FormControl(''),
+      name: new FormControl('',
+      [Validators.required,
+      Validators.minLength(3)]),
       contact: new FormControl(''),
-      comments: new FormControl('')
+      comments: new FormControl('',
+      [Validators.required,
+      Validators.minLength(5)])
     })
     this.loadGameHistoryFromLocalStorage()
     this.statistics = new Statistics(this.gameHistory)
     this.setTitle("Wordle")
+    this.getSuggestedWordLists()
   }
 
   onSubmitGuess() {
@@ -149,19 +164,21 @@ export class AppComponent {
 
   onAddWord() {
     console.info("Add word: ", this.addForm.value.wordAdd)
-    this.wordListSvc.toAddList(this.addForm.value.wordAdd)
+    this.wordListSvc.toAddList(this.addForm.value.wordAdd.toLowerCase())
       .then(result => {
         this.testResponse = JSON.stringify(result)
+        console.info(this.testResponse)
       })
       .catch(result => {
         this.testResponse = JSON.stringify(result)
       })
     this.addForm.reset()
+    this.getSuggestedWordLists()
   }
 
   onRemoveWord() {
     console.info("Remove word: ", this.removeForm.value.wordRemove)
-    this.wordListSvc.toRemoveList(this.removeForm.value.wordRemove)
+    this.wordListSvc.toRemoveList(this.removeForm.value.wordRemove.toLowerCase())
       .then(result => {
         this.testResponse = JSON.stringify(result)
       })
@@ -169,11 +186,39 @@ export class AppComponent {
         this.testResponse = JSON.stringify(result)
       })
     this.removeForm.reset()
+    this.getSuggestedWordLists()
+  }
+
+  getSuggestedWordLists() {
+    this.wordListSvc.getStoredLists()
+      .then(result => {
+        this.addWordList = JSON.parse(JSON.stringify(result)).addList
+        this.removeWordList = JSON.parse(JSON.stringify(result)).removeList
+        if (this.addWordList === "")
+          this.addWordList = "0"
+        if (this.removeWordList === "")
+          this.removeWordList = "0"
+        console.info("Add List: %s", this.addWordList)
+        console.info("Remove List: %s", this.removeWordList)
+      })
+      .catch(result => {
+        console.error("getSuggestedWordList Error: ", result)
+      })
+    
   }
 
   onSubmitContact() {
-    console.info("Comments: ", this.contactForm.value.comments)
-    this.contactForm.reset()
+    let jsonStringFormData = JSON.stringify(this.contactForm.value)
+    console.info("Contact data: ", jsonStringFormData)
+    this.commentSvc.sendComment(jsonStringFormData)
+      .then(result => {
+        console.info("Submit comment response from server: ", result)
+        this.contactForm.reset()
+      })
+      .catch(result => {
+        console.error("SubmitContact error: ", result)
+      })
+    
   }
 
   onRulesButtonPress() {

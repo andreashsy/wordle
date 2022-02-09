@@ -125,6 +125,8 @@
       </mat-card>
     </div>
 
+
+
     <div name="col-5" id="col-5">
       <mat-card>
         <h4>Game mode (refer to rules)</h4>
@@ -133,26 +135,51 @@
       </mat-card>
     </div>
 
-    <div name="col-6" id="col-6">
+
+
+    <div name="col-6" id="col-6" *ngIf="showAddRemoveWordsSection">
       <mat-card>
         <h4>Suggest Add/Remove Words</h4>
         <p>Please suggest words to add/remove</p>
-        <p>{{testResponse}}</p>
-        <form [formGroup]="addForm" (ngSubmit)="onAddWord()">
-          <mat-form-field>
-            <input matInput type="text" placeholder="Word to add" formControlName="wordAdd">
-          </mat-form-field>
-          <button type="submit" mat-raised-button color="primary">Suggest</button>
-        </form>
-        <form [formGroup]="removeForm" (ngSubmit)="onRemoveWord()">
-          <mat-form-field>
-            <input matInput type="text" placeholder="Word to remove" formControlName="wordRemove">
-          </mat-form-field>
-          <button type="submit" mat-raised-button color="primary">Suggest</button>
-        </form>
+        <div *ngIf="addWordList != '*****'; else loadingText">
+          <form [formGroup]="addForm" (ngSubmit)="onAddWord()">
+            <mat-form-field>
+              <input matInput type="text" placeholder="Word to add" formControlName="wordAdd">
+              <mat-hint *ngIf="addFormControl.hasError('wordNotInList')">
+                This word is already in the list
+              </mat-hint>
+              <mat-hint *ngIf="addFormControl.hasError('pattern')">
+                Can only contain alphabets
+              </mat-hint>
+            </mat-form-field>
+            <button type="submit" mat-raised-button color="primary" [disabled]="addForm.invalid">Suggest</button>
+          </form>
+          <form [formGroup]="removeForm" (ngSubmit)="onRemoveWord()">
+            <mat-form-field>
+              <input matInput type="text" placeholder="Word to remove" formControlName="wordRemove">
+              <mat-hint *ngIf="removeFormControl.hasError('wordNotInList')">
+                Must be a valid 5 letter word
+              </mat-hint>
+            </mat-form-field>
+            <button type="submit" mat-raised-button color="primary" [disabled]="removeForm.invalid">Suggest</button>
+          </form>
+        </div>
+        <ng-template #loadingText>
+          <p>Application not able to connect to database</p>
+        </ng-template>
         <p>Suggestions will be reviewed</p>
+        <p *ngIf="addWordList != '0'; else addListZero">Current length of add list: {{addWordList.split(",").length}}</p>
+        <ng-template #addListZero>
+          <p>Current length of add list: 0</p>
+        </ng-template>
+        <p *ngIf="removeWordList != '0'; else removeListZero">Current length of remove list: {{removeWordList.split(",").length}}</p>
+        <ng-template #removeListZero>
+          <p>Current length of remove list: 0</p>
+        </ng-template>
       </mat-card>
     </div>
+
+
 
     <div name="col-7" id="col-7">
       <mat-card>
@@ -163,18 +190,17 @@
               <input matInput type="text" placeholder="Name" formControlName="name">
             </mat-form-field>
             <mat-form-field>
-              <input matInput type="text" placeholder="Contact" formControlName="contact">
+              <input matInput type="text" placeholder="Contact (for getting back to you)" formControlName="contact">
             </mat-form-field>
             <mat-form-field>
               <mat-label>Leave a message</mat-label>
               <textarea matInput cols="100" rows="1" formControlName="comments"></textarea>
             </mat-form-field>
           </div>
-          <button type="submit" mat-raised-button color="primary">Send</button>
+          <button type="submit" mat-raised-button color="primary" [disabled]="contactForm.invalid">Send</button>
         </form>
       </mat-card>
     </div>
-
   </div>
 </div>
 

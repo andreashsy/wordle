@@ -11,6 +11,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { HttpClientModule } from '@angular/common/http';
 import { WordListService } from './wordlist.service';
+import { CommentService } from './comment.service';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { WordListService } from './wordlist.service';
     })
   ],
   providers: [Title,
-              WordListService],
+              WordListService,
+              CommentService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

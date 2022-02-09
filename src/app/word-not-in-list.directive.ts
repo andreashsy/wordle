@@ -7,3 +7,11 @@ export function wordNotInListValidator(stringList: String[]): ValidatorFn {
     return notInList ? {wordNotInList: {value: control.value}} : null;
   };
 }
+
+/** The word must be in the word list */
+export function wordInListValidator(stringList: String[]): ValidatorFn {
+  return (control: AbstractControl): ValidationErrors | null => {
+    const InList = stringList.includes((control.value||"").toLowerCase());
+    return InList ? {wordNotInList: {value: control.value}} : null;
+  };
+}
