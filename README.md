@@ -1,6 +1,25 @@
-# WordleAngular
+# Wordle
+
+Link to vercel deployment (written in typescript / Angular) (latest): https://wordle-andreas.vercel.app/
+Link to github pages deployment (written in typescript / Angular) (latest, cached -> user needs to refresh to get latest deployment): https://andreashsy.github.io/wordle/
+Link to heroku deployment (written in java) (more outdated): https://mywordle.herokuapp.com/
+
+Objective of the game:
+Guess a five-letter word
+
+Rules:
+You have 6 guesses
+Guesses must be a word (based on a list of 3,400+ words, may not contain all words)
+Letters that are in the word and in the correct position are coloured green.
+Letters that are in the word but not in the correct position are coloured yellow.
+Letters that are not in the word are coloured grey.
+Enjoy!
+
+Original game by Josh Wardle - https://www.powerlanguage.co.uk/wordle/
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.2.0.
+
+## Angular details
 
 ## Development server
 
