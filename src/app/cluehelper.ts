@@ -30,7 +30,7 @@ export class ClueHelper {
       if (this.whiteList.includes(guessLetter)) {
         this.whiteList = this.stringArrayRemove(this.whiteList, guessLetter)
       }
-      if (!this.yellowList.includes(guessLetter)) {
+      if (!this.yellowList.includes(guessLetter) && !this.greenList.includes(guessLetter)) {
         this.yellowList.push(guessLetter)
       }
     }
