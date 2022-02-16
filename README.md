@@ -1,8 +1,7 @@
 # Wordle
 
-Link to vercel deployment (written in typescript / Angular) (latest): https://wordle-andreas.vercel.app/
-Link to github pages deployment (written in typescript / Angular) (latest, cached -> user needs to refresh to get latest deployment): https://andreashsy.github.io/wordle/
-Link to heroku deployment (written in java) (more outdated): https://mywordle.herokuapp.com/
+Link to vercel deployment (written in typescript / Angular) (latest): https://wordle-andreas.vercel.app/  
+Link to github pages deployment (written in typescript / Angular) (latest, cached -> user needs to refresh to get latest deployment): https://andreashsy.github.io/wordle/  
 
 Objective of the game:
 Guess a five-letter word
