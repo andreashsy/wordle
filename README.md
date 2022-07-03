@@ -18,7 +18,7 @@ Original game by Josh Wardle - https://www.powerlanguage.co.uk/wordle/
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.2.0.
 
-## Project details
+## Project Architecture
 
 Frontend (Angular/Typescript): Contains everything to run the game (game logic, list of valid words, etc). Individual player statistics saved to local storage.
 
