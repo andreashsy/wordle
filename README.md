@@ -27,7 +27,7 @@ Backend (SpringBoot/Java, Redis): Backend written using SpringBoot, connects to 
 ```mermaid
 flowchart LR;
     Client---Backend;
-    Client-.-Local Storage;
+    Client-.-LocalStorage;
     Backend---Redis;
 ```
 
