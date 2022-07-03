@@ -18,7 +18,10 @@ Original game by Josh Wardle - https://www.powerlanguage.co.uk/wordle/
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.2.0.
 
-## Angular details
+## Project details
+
+Frontend (Angular/Typescript): Contains everything to run the game (game logic, list of valid words, etc). Individual player statistics saved to local storage.
+Backend (SpringBoot/Java, Redis): Backend written using SpringBoot, connects to a Redis instance. Saves player comments, word suggestions (Ideally would be SQL database, but using Redis due to cost constraints)
 
 ## Development server
 
