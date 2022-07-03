@@ -24,6 +24,13 @@ Frontend (Angular/Typescript): Contains everything to run the game (game logic, 
 
 Backend (SpringBoot/Java, Redis): Backend written using SpringBoot, connects to a Redis instance. Saves player comments, word suggestions (Ideally would be SQL database, but using Redis due to cost constraints)
 
+```mermaid
+flowchart LR;
+    Client---Backend;
+    Client-.-Local Storage;
+    Backend---Redis;
+```
+
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
